@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team - The Petra Group</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+        .team-section {
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+            min-height: calc(100vh - 200px);
+        }
+
+        .team-section h1 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #111;
+            font-weight: 600;
+            letter-spacing: -1px;
+        }
+
+        .team-section .subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 50px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .team-card {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-8px);
+            filter: brightness(1.05);
+        }
+
+        .team-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 4px solid #c9a23f;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .team-card:hover .team-image {
+            transform: scale(1.08);
+        }
+
+        .team-card h3 {
+            font-size: 1.3rem;
+            color: #111;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .team-card .title {
+            font-size: 0.95rem;
+            color: #c9a23f;
+            font-weight: 500;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #999;
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: #c9a23f;
+            transform: rotate(90deg);
+        }
+
+        .modal-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 25px;
+            border: 4px solid #c9a23f;
+            display: block;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            color: #111;
+            margin-bottom: 8px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .modal-position {
+            font-size: 1.1rem;
+            color: #c9a23f;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-bio {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #333;
+            text-align: left;
+            margin-bottom: 20px;
+            border-top: 2px solid #f0f0f0;
+            padding-top: 20px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .team-section h1 {
+                font-size: 2rem;
+                margin-bottom: 20px;
+            }
+
+            .team-section .subtitle {
+                font-size: 1rem;
+                margin-bottom: 35px;
+            }
+
+            .team-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 30px;
+            }
+
+            .team-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+
+            .modal-title {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+                padding: 0 10px;
+            }
+
+            .team-image {
+                width: 120px;
+                height: 120px;
+            }
+
+            .team-card h3 {
+                font-size: 1rem;
+            }
+
+            .team-card .title {
+                font-size: 0.85rem;
+            }
+
+            .modal-content {
+                max-height: 90vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo-container">
+                <img src="../assets/images/team/tpgbenefitslogowht.png" alt="The Petra Group" class="logo-img">
+                <span class="logo-text">The Petra Group</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="carriers.html">Carriers</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html">Portal</a></li>
+            </ul>
+            <div id="auth-nav"></div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="team-section">
+            <h1>Our Team</h1>
+            <p class="subtitle">Expert professionals with decades of combined experience in benefits and financial planning.</p>
+            <div id="team-grid" class="team-grid"></div>
+        </section>
+    </main>
+
+    <!-- Modal -->
+    <div id="team-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <img id="modal-image" src="" alt="" class="modal-image">
+            <h2 id="modal-name" class="modal-title"></h2>
+            <p id="modal-position" class="modal-position"></p>
+            <p id="modal-bio" class="modal-bio"></p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 The Petra Group Insurance & Financial Services. All rights reserved.</p>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        const modal = document.getElementById('team-modal');
+        const modalClose = document.getElementById('modal-close');
+        let currentTeam = [];
+
+        async function loadTeam() {
+            try {
+                const response = await fetch('../data/team.json');
+                currentTeam = await response.json();
+                const grid = document.getElementById('team-grid');
+                grid.innerHTML = '';
+
+                currentTeam.forEach((member, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'team-card';
+                    card.innerHTML = `
+                        <img src="../assets/images/team/${member.image}" alt="${member.name}" class="team-image">
+                        <h3>${member.name}</h3>
+                        <p class="title">${member.title}</p>
+                    `;
+                    card.addEventListener('click', () => openModal(index));
+                    grid.appendChild(card);
+                });
+            } catch (error) {
+                console.error('Error loading team:', error);
+            }
+        }
+
+        function openModal(index) {
+            const member = currentTeam[index];
+            document.getElementById('modal-image').src = `../assets/images/team/${member.image}`;
+            document.getElementById('modal-image').alt = member.name;
+            document.getElementById('modal-name').textContent = member.name;
+            document.getElementById('modal-position').textContent = member.title;
+            document.getElementById('modal-bio').textContent = member.bio;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        modalClose.addEventListener('click', closeModal);
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', loadTeam);
+    </script>
+</body>
+</html>

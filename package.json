@@ -1,0 +1,24 @@
+{
+  "name": "petra-group-website",
+  "version": "1.0.0",
+  "description": "The Petra Group Insurance & Financial Services - Static Marketing Website",
+  "type": "module",
+  "scripts": {
+    "build": "node build.js",
+    "serve": "http-server dist -p 8000",
+    "dev": "node build.js && http-server dist -p 8000 -c-1"
+  },
+  "keywords": [
+    "insurance",
+    "benefits",
+    "marketing",
+    "static-site",
+    "html5",
+    "vanilla-js"
+  ],
+  "author": "The Petra Group",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
