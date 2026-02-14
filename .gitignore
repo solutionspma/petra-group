@@ -9,3 +9,6 @@ node_modules/
 *.log
 src/assets/images/team/
 .gitkeep
+
+# Local Netlify folder
+.netlify
