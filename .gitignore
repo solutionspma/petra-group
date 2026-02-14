@@ -1,0 +1,11 @@
+dist/
+node_modules/
+.DS_Store
+*.zip
+.env
+.env.local
+.vscode
+.idea
+*.log
+src/assets/images/team/
+.gitkeep
