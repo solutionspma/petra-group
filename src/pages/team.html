@@ -253,30 +253,53 @@
 <body>
     <header>
         <nav>
-            <div class="logo-container">
-                <img src="../assets/images/team/tpgbenefitslogowht.png" alt="The Petra Group" class="logo-img">
+    <div class="logo-container">
+                <img src="../assets/petra-group-logo-white.png" alt="The Petra Group" class="logo-img">
                 <span class="logo-text">The Petra Group</span>
             </div>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="team.html">Team</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="carriers.html">Carriers</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="login.html">Portal</a></li>
-            </ul>
-            <div id="auth-nav"></div>
-        </nav>
-    </header>
+    <button class="hamburger" id="hamburger-menu" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html" onclick="closeMenu()">Home</a></li>
+      <li><a href="about.html" onclick="closeMenu()">About</a></li>
+      <li><a href="team.html" onclick="closeMenu()">Team</a></li>
+      <li><a href="services.html" onclick="closeMenu()">Services</a></li>
+      <li><a href="carriers.html" onclick="closeMenu()">Carriers</a></li>
+      <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>
+      <li><a href="login.html" onclick="closeMenu()">Portal</a></li>
+    </ul>
+    <div id="auth-nav"></div>
+  </nav>
+</header>
 
-    <main>
-        <section class="team-section">
-            <h1>Our Team</h1>
-            <p class="subtitle">Expert professionals with decades of combined experience in benefits and financial planning.</p>
-            <div id="team-grid" class="team-grid"></div>
-        </section>
-    </main>
+<script>
+function toggleMenu() {
+  const menu = document.getElementById('nav-links');
+  const hamburger = document.getElementById('hamburger-menu');
+  menu.classList.toggle('active');
+  hamburger.classList.toggle('active');
+}
+
+function closeMenu() {
+  const menu = document.getElementById('nav-links');
+  const hamburger = document.getElementById('hamburger-menu');
+  menu.classList.remove('active');
+  hamburger.classList.remove('active');
+}
+</script>
+
+<main>
+  <section class="team-section">
+    <h1>Our Team</h1>
+    <p class="subtitle">Meet the experienced professionals dedicated to your success</p>
+    <div class="team-grid" id="team-grid">
+      <!-- Team cards will be loaded here -->
+    </div>
+  </section>
+</main>
 
     <!-- Modal -->
     <div id="team-modal" class="modal">

@@ -6,53 +6,369 @@
   <title>Services | The Petra Group</title>
   <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="../css/main.css">
+  <style>
+    /* Services Page Styles */
+    .services-hero {
+      background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+      padding: 60px 20px;
+      text-align: center;
+      border-bottom: 3px solid var(--gold);
+    }
+
+    .services-hero h1 {
+      font-size: 2.8em;
+      color: var(--black);
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .services-hero p {
+      font-size: 1.1em;
+      color: #666;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    /* Service Detail Section */
+    .service-detail {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      margin-bottom: 80px;
+      padding: 40px;
+      background: var(--white);
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .service-detail.reverse {
+      direction: rtl;
+    }
+
+    .service-detail.reverse > * {
+      direction: ltr;
+    }
+
+    .service-image {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .service-detail:hover .service-image {
+      transform: scale(1.02);
+    }
+
+    .service-content h2 {
+      font-size: 2em;
+      color: var(--black);
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .service-content .subtitle {
+      font-size: 1.1em;
+      color: var(--gold);
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .service-content p {
+      font-size: 1em;
+      line-height: 1.8;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .feature-list {
+      list-style: none;
+      margin: 30px 0;
+    }
+
+    .feature-list li {
+      padding: 10px 0 10px 30px;
+      position: relative;
+      color: #333;
+      font-size: 0.95em;
+      line-height: 1.6;
+    }
+
+    .feature-list li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+
+    .benefit-badge {
+      background: linear-gradient(135deg, var(--gold), #b8912f);
+      color: white;
+      padding: 15px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-top: 20px;
+      display: inline-block;
+    }
+
+    .service-cta {
+      margin-top: 30px;
+    }
+
+    .service-cta a {
+      display: inline-block;
+      padding: 12px 30px;
+      background: var(--gold);
+      color: black;
+      font-weight: bold;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .service-cta a:hover {
+      background: #b8912f;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(201, 162, 63, 0.3);
+    }
+
+    /* Overview Cards */
+    .services-overview {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 60px;
+    }
+
+    .overview-card {
+      background: linear-gradient(135deg, var(--gold), #b8912f);
+      color: white;
+      padding: 30px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .overview-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .overview-card h3 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .overview-card p {
+      font-size: 0.95em;
+      line-height: 1.6;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .services-hero h1 {
+        font-size: 2em;
+      }
+
+      .services-hero p {
+        font-size: 1em;
+      }
+
+      .service-detail {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 20px;
+        margin-bottom: 40px;
+      }
+
+      .service-image {
+        height: 300px;
+      }
+
+      .service-content h2 {
+        font-size: 1.5em;
+      }
+
+      .services-overview {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .services-hero {
+        padding: 30px 15px;
+      }
+
+      .services-hero h1 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+      }
+
+      .services-hero p {
+        font-size: 0.9em;
+      }
+
+      .service-detail {
+        padding: 15px;
+        margin-bottom: 30px;
+      }
+
+      .service-image {
+        height: 250px;
+      }
+
+      .service-content h2 {
+        font-size: 1.3em;
+        margin-bottom: 10px;
+      }
+
+      .service-content p {
+        font-size: 0.9em;
+      }
+
+      .feature-list li {
+        padding: 8px 0 8px 25px;
+        font-size: 0.9em;
+      }
+
+      .benefit-badge {
+        padding: 10px 15px;
+        font-size: 0.9em;
+      }
+    }
+  </style>
 </head>
 <body>
 
 <header>
   <nav>
     <div class="logo-container">
-      <img src="../assets/images/team/tpgbenefitslogowht.png" alt="The Petra Group" class="logo-img">
+      <img src="../assets/petra-group-logo-white.png" alt="The Petra Group" class="logo-img">
       <span class="logo-text">The Petra Group</span>
     </div>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="team.html">Team</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="carriers.html">Carriers</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="login.html">Portal</a></li>
+    <button class="hamburger" id="hamburger-menu" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html" onclick="closeMenu()">Home</a></li>
+      <li><a href="about.html" onclick="closeMenu()">About</a></li>
+      <li><a href="team.html" onclick="closeMenu()">Team</a></li>
+      <li><a href="services.html" onclick="closeMenu()">Services</a></li>
+      <li><a href="carriers.html" onclick="closeMenu()">Carriers</a></li>
+      <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>
+      <li><a href="login.html" onclick="closeMenu()">Portal</a></li>
     </ul>
     <div id="auth-nav"></div>
   </nav>
 </header>
 
+<script>
+function toggleMenu() {
+  const menu = document.getElementById('nav-links');
+  const hamburger = document.getElementById('hamburger-menu');
+  menu.classList.toggle('active');
+  hamburger.classList.toggle('active');
+}
+
+function closeMenu() {
+  const menu = document.getElementById('nav-links');
+  const hamburger = document.getElementById('hamburger-menu');
+  menu.classList.remove('active');
+  hamburger.classList.remove('active');
+}
+</script>
+
+<div class="services-hero">
+  <h1>Our Comprehensive Services</h1>
+  <p>The Petra Group provides a complete suite of benefits administration, compliance, and financial planning services. We serve employers and individuals across multiple industries, offering customized solutions that enhance employee satisfaction and financial security.</p>
+</div>
+
 <section class="section">
-  <h1>Our Services</h1>
-  <p style="text-align: center; margin-bottom: 50px; font-size: 1.1em; color: #666;">Comprehensive benefits solutions tailored to your unique needs.</p>
+  <h2 style="text-align: center; margin-bottom: 50px; font-size: 2em;">What We Offer</h2>
   
-  <div id="services" class="grid"></div>
+  <!-- Services Overview -->
+  <div class="services-overview" style="margin-bottom: 80px;">
+    <div class="overview-card">
+      <h3>Benefits Administration</h3>
+      <p>Complete management of employee benefit programs with full compliance and employee support.</p>
+    </div>
+    <div class="overview-card">
+      <h3>Compliance & Compliance</h3>
+      <p>Expert guidance ensuring adherence to all federal and state regulations and requirements.</p>
+    </div>
+    <div class="overview-card">
+      <h3>Financial Planning</h3>
+      <p>Retirement planning, annuities, and long-term wealth building strategies for individuals.</p>
+    </div>
+  </div>
+
+  <!-- Service Details -->
+  <div id="services-container"></div>
 </section>
 
 <section class="section" style="background: var(--gray);">
-  <h2>How We Help</h2>
+  <h2>Why Partner With The Petra Group?</h2>
   <div class="grid">
     <div class="card" style="background: var(--white);">
+      <h3>Over 30 Years of Experience</h3>
+      <p>Trusted by hundreds of employers and thousands of individuals across Louisiana, Mississippi, and Alabama.</p>
+    </div>
+    <div class="card" style="background: var(--white);">
+      <h3>Expert Team</h3>
+      <p>Licensed professionals with deep expertise in benefits administration, compliance, and financial planning.</p>
+    </div>
+    <div class="card" style="background: var(--white);">
+      <h3>Live Support</h3>
+      <p>Employees speak directly with knowledgeable representatives during business hours with prompt callbacks.</p>
+    </div>
+    <div class="card" style="background: var(--white);">
+      <h3>Customized Solutions</h3>
+      <p>Tailored strategies designed for your organization's specific needs and goals.</p>
+    </div>
+    <div class="card" style="background: var(--white);">
+      <h3>Integrated Services</h3>
+      <p>One-stop solution for all your benefits, compliance, and financial planning needs.</p>
+    </div>
+    <div class="card" style="background: var(--white);">
+      <h3>Carrier Partnerships</h3>
+      <p>Strategic relationships with major carriers for competitive rates and superior coverage options.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h2 style="text-align: center; margin-bottom: 50px;">Ready to Get Started?</h2>
+  <div class="grid">
+    <div class="card" style="background: var(--white); text-align: center;">
       <h3>For Employers</h3>
       <p>We streamline benefits administration, reduce compliance risk, and improve employee satisfaction through clear communication and strategic planning.</p>
-      <a class="btn" href="contact.html">Get Started</a>
+      <a class="btn" href="contact.html">Schedule a Consultation</a>
     </div>
-    <div class="card" style="background: var(--white);">
-      <h3>For Employees</h3>
+    <div class="card" style="background: var(--white); text-align: center;">
+      <h3>For Individuals</h3>
       <p>We empower you to understand your benefits, make informed decisions, and build a secure financial future with personalized guidance.</p>
-      <a class="btn" href="login.html">Access Resources</a>
+      <a class="btn" href="contact.html">Get Personalized Advice</a>
     </div>
-    <div class="card" style="background: var(--white);">
-      <h3>For Organizations</h3>
-      <p>Our organizational consulting helps improve benefits strategy, employee retention, and overall HR effectiveness.</p>
-      <a class="btn" href="contact.html">Learn More</a>
-    </div>
+  </div>
+</section>
+
+<section class="section" style="background: var(--gray); text-align: center;">
+  <h2>Contact Information</h2>
+  <div style="margin-top: 30px; font-size: 1.1em;">
+    <p style="margin-bottom: 15px;"><strong>Phone:</strong> <a href="tel:+1-800-334-3310" style="color: var(--gold); text-decoration: underline;">1-800-334-3310</a></p>
+    <p style="margin-bottom: 15px;"><strong>Fax:</strong> <a href="tel:+1-888-818-4681" style="color: var(--gold); text-decoration: underline;">1-888-818-4681</a></p>
+    <p style="margin-bottom: 15px;"><strong>Website:</strong> <a href="http://www.thepetragroup.net" target="_blank" style="color: var(--gold); text-decoration: underline;">www.thepetragroup.net</a></p>
+    <p><strong>Email:</strong> <a href="mailto:t.dixon@thepetragroup.net" style="color: var(--gold); text-decoration: underline;">t.dixon@thepetragroup.net</a></p>
   </div>
 </section>
 
@@ -69,13 +385,46 @@ document.addEventListener('DOMContentLoaded', async () => {
     const response = await fetch('../data/services.json');
     const services = await response.json();
     
-    const servicesContainer = document.getElementById('services');
-    servicesContainer.innerHTML = services.map(service => `
-      <div class="card">
-        <h3>${service.name}</h3>
-        <p>${service.description}</p>
-      </div>
-    `).join('');
+    const container = document.getElementById('services-container');
+    const imageMap = {
+      'Section 125 Cafeteria Plans': 'cafeteria-plan.jpg',
+      'Flexible Spending Accounts (FSA)': 'flexible-spending.jpg',
+      'COBRA Administration': 'cobra-admin.jpg',
+      'Employee Benefits Communication': 'benefits-communication.jpg',
+      'Electronic Enrollment Platform': 'enrollment-platform.jpg',
+      'Retirement Planning & Annuities': 'retirement-planning.jpg',
+      'Major Medical & Supplemental Plans': 'medical-plans.jpg',
+      'Compliance & Administration': 'compliance-admin.jpg',
+      'Call Center Support': 'call-center.jpg'
+    };
+
+    container.innerHTML = services.map((service, index) => {
+      const imagePath = imageMap[service.name] ? `../assets/images/services/${imageMap[service.name]}` : '../assets/images/services/cafeteria-plan.jpg';
+      const isReverse = index % 2 === 1;
+      
+      return `
+        <div class="service-detail ${isReverse ? 'reverse' : ''}">
+          <img src="${imagePath}" alt="${service.name}" class="service-image">
+          <div class="service-content">
+            <h2>${service.name}</h2>
+            <p class="subtitle">${service.description}</p>
+            <p>${service.fullDescription}</p>
+            
+            <h4 style="color: var(--gold); font-weight: bold; margin: 25px 0 15px 0; font-size: 1.1em;">Key Features:</h4>
+            <ul class="feature-list">
+              ${service.features.map(feature => `<li>${feature}</li>`).join('')}
+            </ul>
+            
+            <div class="benefit-badge">${service.benefits}</div>
+            
+            <div class="service-cta">
+              <a href="${service.link}">Learn More & Contact Us</a>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
   } catch (error) {
     console.error('Error loading services:', error);
   }

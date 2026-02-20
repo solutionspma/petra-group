@@ -6,56 +6,416 @@
   <title>About Us | The Petra Group</title>
   <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="../css/main.css">
+  <style>
+    /* About Page Styles */
+    .about-hero {
+      background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+      padding: 60px 20px;
+      text-align: center;
+      border-bottom: 3px solid var(--gold);
+    }
+
+    .about-hero h1 {
+      font-size: 2.8em;
+      color: var(--black);
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .about-hero p {
+      font-size: 1.1em;
+      color: #666;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    /* About Section */
+    .about-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      margin-bottom: 80px;
+      padding: 40px;
+      background: var(--white);
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .about-section.reverse {
+      direction: rtl;
+    }
+
+    .about-section.reverse > * {
+      direction: ltr;
+    }
+
+    .about-image {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .about-section:hover .about-image {
+      transform: scale(1.02);
+    }
+
+    .about-content h2 {
+      font-size: 2em;
+      color: var(--black);
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .about-content p {
+      font-size: 1em;
+      line-height: 1.8;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .value-list {
+      list-style: none;
+      margin: 25px 0;
+    }
+
+    .value-list li {
+      padding: 12px 0 12px 30px;
+      position: relative;
+      color: #333;
+      font-size: 0.95em;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .value-list li strong {
+      color: var(--gold);
+    }
+
+    .value-list li:before {
+      content: "♦";
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding: 40px 0;
+    }
+
+    .timeline-item {
+      margin-bottom: 50px;
+      padding-left: 40px;
+      position: relative;
+    }
+
+    .timeline-item:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 3px;
+      width: 20px;
+      height: 20px;
+      background: var(--gold);
+      border-radius: 50%;
+      border: 4px solid white;
+      box-shadow: 0 0 0 2px var(--gold);
+    }
+
+    .timeline-item h3 {
+      font-size: 1.3em;
+      color: var(--black);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .timeline-item .year {
+      font-size: 0.9em;
+      color: var(--gold);
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .timeline-item p {
+      color: #555;
+      font-size: 0.95em;
+      line-height: 1.6;
+    }
+
+    /* Core Values Grid */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin: 40px 0;
+    }
+
+    .value-card {
+      background: linear-gradient(135deg, var(--gold), #b8912f);
+      color: white;
+      padding: 30px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .value-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .value-card h3 {
+      font-size: 1.3em;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .value-card p {
+      font-size: 0.95em;
+      line-height: 1.6;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .about-hero h1 {
+        font-size: 2em;
+      }
+
+      .about-section {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 20px;
+        margin-bottom: 40px;
+      }
+
+      .about-image {
+        height: 300px;
+      }
+
+      .about-content h2 {
+        font-size: 1.5em;
+      }
+
+      .values-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .about-hero {
+        padding: 30px 15px;
+      }
+
+      .about-hero h1 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+      }
+
+      .about-hero p {
+        font-size: 0.9em;
+      }
+
+      .about-section {
+        padding: 15px;
+        margin-bottom: 30px;
+      }
+
+      .about-image {
+        height: 250px;
+      }
+
+      .about-content h2 {
+        font-size: 1.3em;
+        margin-bottom: 15px;
+      }
+
+      .about-content p {
+        font-size: 0.9em;
+      }
+
+      .value-list li {
+        padding: 10px 0 10px 25px;
+        font-size: 0.9em;
+      }
+
+      .timeline-item {
+        padding-left: 30px;
+      }
+
+      .value-card {
+        padding: 20px;
+      }
+
+      .value-card h3 {
+        font-size: 1.1em;
+      }
+    }
+  </style>
 </head>
 <body>
 
 <header>
   <nav>
     <div class="logo-container">
-      <img src="../assets/images/team/tpgbenefitslogowht.png" alt="The Petra Group" class="logo-img">
+      <img src="../assets/petra-group-logo-white.png" alt="The Petra Group" class="logo-img">
       <span class="logo-text">The Petra Group</span>
     </div>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="team.html">Team</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="carriers.html">Carriers</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="login.html">Portal</a></li>
+    <button class="hamburger" id="hamburger-menu" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html" onclick="closeMenu()">Home</a></li>
+      <li><a href="about.html" onclick="closeMenu()">About</a></li>
+      <li><a href="team.html" onclick="closeMenu()">Team</a></li>
+      <li><a href="services.html" onclick="closeMenu()">Services</a></li>
+      <li><a href="carriers.html" onclick="closeMenu()">Carriers</a></li>
+      <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>
+      <li><a href="login.html" onclick="closeMenu()">Portal</a></li>
     </ul>
     <div id="auth-nav"></div>
   </nav>
 </header>
 
-<section class="section">
+<script>
+function toggleMenu() {
+  const menu = document.getElementById('nav-links');
+  const hamburger = document.getElementById('hamburger-menu');
+  menu.classList.toggle('active');
+  hamburger.classList.toggle('active');
+}
+
+function closeMenu() {
+  const menu = document.getElementById('nav-links');
+  const hamburger = document.getElementById('hamburger-menu');
+  menu.classList.remove('active');
+  hamburger.classList.remove('active');
+}
+</script>
+
+<div class="about-hero">
   <h1>About The Petra Group</h1>
-  
-  <div style="margin: 40px 0; line-height: 1.8; font-size: 1.1em;">
-    <h2 style="margin: 30px 0 15px 0; color: var(--gold);">Our Mission</h2>
-    <p>The Petra Group bridges the critical gap between employers, employees, and insurance carriers through expert benefits communication, comprehensive administration, and personalized financial planning.</p>
+  <p>Over 30 years of expert insurance and financial services, dedicated to protecting your future and helping you make informed decisions about your benefits.</p>
+</div>
 
-    <h2 style="margin: 30px 0 15px 0; color: var(--gold);">Our Heritage</h2>
-    <p>Founded with over 40 years of insurance industry expertise, The Petra Group has consistently delivered innovative benefits solutions to employers and financial security strategies to individuals.</p>
+<section class="section">
+  <!-- Mission Section -->
+  <div class="about-section">
+    <img src="../assets/images/about/mission.jpg" alt="Our Mission" class="about-image">
+    <div class="about-content">
+      <h2>Our Mission</h2>
+      <p>The Petra Group bridges the critical gap between employers, employees, and insurance carriers through expert benefits communication, comprehensive administration, and personalized financial planning.</p>
+      <p>We are committed to our clients and believe in long-term relationships built on trust. We provide valuable and dependable services with efficiency, integrity, professionalism, and honesty. To the employees of our clients, we work hard to communicate and educate various enrollment options so they can make informed decisions.</p>
+      <p style="margin-top: 20px; font-style: italic; color: var(--gold); font-weight: bold;">Our objective is to be recognized as the best in each and every area in which we do business.</p>
+    </div>
+  </div>
 
-    <h2 style="margin: 30px 0 15px 0; color: var(--gold);">Core Values</h2>
-    <ul style="margin-left: 20px; list-style: disc;">
-      <li style="margin-bottom: 10px;"><strong>Integrity:</strong> Honest, transparent partnership in every interaction</li>
-      <li style="margin-bottom: 10px;"><strong>Expertise:</strong> Deep knowledge and continuous professional development</li>
-      <li style="margin-bottom: 10px;"><strong>Client Focus:</strong> Your goals drive our strategies</li>
-      <li style="margin-bottom: 10px;"><strong>Innovation:</strong> Modern solutions to complex benefits challenges</li>
-      <li style="margin-bottom: 10px;"><strong>Relationship:</strong> Long-term partnerships built on trust</li>
-    </ul>
+  <!-- Heritage Section -->
+  <div class="about-section reverse">
+    <img src="../assets/images/about/heritage.jpg" alt="Our Heritage" class="about-image">
+    <div class="about-content">
+      <h2>Our Heritage</h2>
+      <p>Founded in 1994 under the leadership of Troy J. Dixon, The Petra Group originated from a vision to provide innovative benefits solutions and personalized financial planning.</p>
+      <p>With over 40 years of insurance industry expertise, we have consistently delivered effective benefits administration to employers and financial security strategies to individuals. Troy began his career in 1984 with Life of Georgia Insurance Company, later joining Metropolitan Life, before establishing The Petra Group in 1994.</p>
+      <p>Over the decades, we've expanded our reach across Louisiana, Mississippi, and Alabama, serving hundreds of employers and thousands of individuals. We manage benefit programs for major organizations including the City of Baton Rouge (7,000 employees), Southern University (2,200 employees), and numerous school districts across the region.</p>
+      <p style="margin-top: 15px; font-size: 0.95em; color: #666;"><strong>Key Achievement:</strong> When partnering with Taylor & Sons Insurance Agency (2005-2008), we expanded into Mississippi and tripled premium volume within two years, establishing Taylor & Sons as one of Louisiana's largest benefit providers.</p>
+    </div>
+  </div>
 
-    <h2 style="margin: 30px 0 15px 0; color: var(--gold);">What We Do</h2>
-    <p>We serve employers and individuals across multiple industries, offering:</p>
-    <ul style="margin-left: 20px; list-style: disc;">
-      <li style="margin-bottom: 10px;">Benefits administration and compliance</li>
-      <li style="margin-bottom: 10px;">Employee communication and enrollment</li>
-      <li style="margin-bottom: 10px;">Retirement and financial planning</li>
-      <li style="margin-bottom: 10px;">Carrier partnerships and negotiations</li>
-      <li style="margin-bottom: 10px;">Customized benefits strategies</li>
-    </ul>
+  <!-- Core Values Section -->
+  <div style="margin: 80px 0; padding: 40px; background: var(--gray); border-radius: 8px;">
+    <h2 style="text-align: center; font-size: 2em; margin-bottom: 50px;">Our Core Values</h2>
+    <div class="values-grid">
+      <div class="value-card">
+        <h3>Integrity</h3>
+        <p>Honest, transparent partnerships in every interaction we have with our clients and their employees.</p>
+      </div>
+      <div class="value-card">
+        <h3>Expertise</h3>
+        <p>Deep knowledge and continuous professional development across all insurance and benefits areas.</p>
+      </div>
+      <div class="value-card">
+        <h3>Client Focus</h3>
+        <p>Your goals and needs drive our strategies and shape every decision we make.</p>
+      </div>
+      <div class="value-card">
+        <h3>Innovation</h3>
+        <p>Modern solutions to complex benefits challenges using cutting-edge technology and processes.</p>
+      </div>
+      <div class="value-card">
+        <h3>Relationships</h3>
+        <p>Long-term partnerships built on trust, reliability, and consistent exceptional service.</p>
+      </div>
+      <div class="value-card">
+        <h3>Accuracy</h3>
+        <p>Getting it right the first time with precision in every detail of benefits administration.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- What We Do Section -->
+  <div class="about-section">
+    <img src="../assets/images/about/teamwork.jpg" alt="What We Do" class="about-image">
+    <div class="about-content">
+      <h2>What We Do</h2>
+      <p>We serve employers and individuals across multiple industries, offering comprehensive solutions across the entire benefits spectrum:</p>
+      <ul class="value-list">
+        <li><strong>Benefits Administration:</strong> Complete management of employee benefit programs</li>
+        <li><strong>Compliance & Regulatory:</strong> Ensuring adherence to all federal and state requirements</li>
+        <li><strong>Employee Communication:</strong> Clear, engaging education for informed benefit decisions</li>
+        <li><strong>Retirement Planning:</strong> Strategic long-term financial security for employees</li>
+        <li><strong>Carrier Partnerships:</strong> Negotiations and relationships with major insurance carriers</li>
+        <li><strong>Customized Strategies:</strong> Tailored benefits programs for organizations of all sizes</li>
+      </ul>
+      <p style="margin-top: 20px; color: #666; font-size: 0.95em;"><strong>40+ Years of Success:</strong> We continue to be sensitive to our clients' needs and make their satisfaction our most important job.</p>
+    </div>
+  </div>
+
+  <!-- Why Choose Us -->
+  <div style="margin-top: 80px; padding: 40px; background: linear-gradient(135deg, var(--gold), #b8912f); border-radius: 8px; color: white; text-align: center;">
+    <h2 style="color: white; font-size: 2em; margin-bottom: 30px;">Why Choose The Petra Group?</h2>
+    <div class="grid" style="margin-top: 30px;">
+      <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 6px;">
+        <h3 style="margin-bottom: 10px; font-size: 1.2em;">Largest Independent Brokerages</h3>
+        <p>One of Louisiana's largest independent insurance brokerages with preferred carrier relationships</p>
+      </div>
+      <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 6px;">
+        <h3 style="margin-bottom: 10px; font-size: 1.2em;">Live Support</h3>
+        <p>Direct access to knowledgeable representatives during business hours with prompt after-hours callbacks</p>
+      </div>
+      <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 6px;">
+        <h3 style="margin-bottom: 10px; font-size: 1.2em;">Multi-Region Expertise</h3>
+        <p>Serving Alabama, Louisiana, and Mississippi with deep local and regional market knowledge</p>
+      </div>
+      <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 6px;">
+        <h3 style="margin-bottom: 10px; font-size: 1.2em;">Comprehensive Solutions</h3>
+        <p>Complete suite of services from administration through financial planning all in one partnership</p>
+      </div>
+      <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 6px;">
+        <h3 style="margin-bottom: 10px; font-size: 1.2em;">Results-Driven</h3>
+        <p>Proven track record of improving employee satisfaction, reducing compliance risk, and growing businesses</p>
+      </div>
+      <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 6px;">
+        <h3 style="margin-bottom: 10px; font-size: 1.2em;">Client-Centered</h3>
+        <p>30+ years of long-term relationships built on trust, integrity, and exceptional service</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Call to Action -->
+  <div style="margin-top: 60px; padding: 40px; background: var(--gray); border-radius: 8px; text-align: center;">
+    <h2 style="margin-bottom: 20px;">Ready to Partner With Us?</h2>
+    <p style="margin-bottom: 30px; font-size: 1.1em; color: #666;">Let The Petra Group help you build a comprehensive benefits strategy that protects your organization and empowers your employees.</p>
+    <a class="btn" href="contact.html" style="font-size: 1.1em; padding: 16px 40px;">Contact Us Today</a>
   </div>
 </section>
 
@@ -64,7 +424,27 @@
   <p>Professional Benefits Administration | Employee Communication | Financial Planning</p>
 </footer>
 
-<script type="module" src="../js/main.js"></script>
+<script type="module">
+import { getCurrentUser } from '../js/auth.stub.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+  const user = getCurrentUser();
+  const authNav = document.getElementById('auth-nav');
+  if (user && authNav) {
+    authNav.innerHTML = `
+      <span>Logged in as <strong>${user.role}</strong></span>
+      <button onclick="handleLogout()" class="btn">Logout</button>
+    `;
+  }
+});
+
+window.handleLogout = function() {
+  import('../js/auth.stub.js').then(module => {
+    module.logout();
+    window.location.href = 'index.html';
+  });
+};
+</script>
 
 </body>
 </html>

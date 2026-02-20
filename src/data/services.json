@@ -1,34 +1,137 @@
 [
   {
     "name": "Section 125 Cafeteria Plans",
-    "description": "Tax-advantaged benefit selections for employees."
+    "description": "Tax-advantaged benefit selections for employees.",
+    "fullDescription": "Our IRS Section 125 Cafeteria Plan administration provides employees with the opportunity to select benefits on a pre-tax basis, reducing their taxable income and increasing take-home pay. We handle plan design, compliance testing, claims processing, and employee education to ensure seamless implementation.",
+    "features": [
+      "Plan document review and IRS compliance",
+      "Discrimination testing (twice yearly)",
+      "Payroll deduction processing",
+      "Claims management with 24-48 hour turnaround",
+      "Employee education and enrollment materials",
+      "Hardship request assistance"
+    ],
+    "benefits": "Employees save on average 20-30% through pre-tax contributions",
+    "link": "tel:+1-800-334-3310"
   },
   {
     "name": "Flexible Spending Accounts (FSA)",
-    "description": "Pre-tax options for healthcare and dependent care expenses."
+    "description": "Pre-tax options for healthcare and dependent care expenses.",
+    "fullDescription": "Flexible Spending Accounts allow employees to set aside pre-tax dollars for qualified healthcare and dependent care expenses. Our comprehensive FSA administration includes enrollment management, claims processing, and reimbursement options including direct deposit and debit cards.",
+    "features": [
+      "Healthcare and Dependent Care FSA options",
+      "Daily, weekly, semi-monthly, or monthly reimbursement schedules",
+      "Paper check, electronic deposit, or debit card reimbursement",
+      "Frequent claims submission capability",
+      "Discrimination testing and compliance",
+      "Employee education and support"
+    ],
+    "benefits": "Average family saves $2,500+ annually through FSA tax advantages",
+    "link": "tel:+1-800-334-3310"
   },
   {
     "name": "COBRA Administration",
-    "description": "Comprehensive continuation coverage management."
+    "description": "Comprehensive continuation coverage management.",
+    "fullDescription": "We manage all aspects of COBRA continuation coverage, ensuring your organization remains fully compliant with federal requirements. From eligibility determination through premium collection and claims coordination, our team handles the complete administration.",
+    "features": [
+      "COBRA eligibility determination",
+      "Notice preparation and distribution",
+      "Premium billing and collection",
+      "Claims coordination with carriers",
+      "Qualifying event documentation",
+      "Compliance monitoring and reporting"
+    ],
+    "benefits": "Reduce compliance risk and administrative burden",
+    "link": "tel:+1-800-334-3310"
   },
   {
     "name": "Employee Benefits Communication",
-    "description": "Clear, engaging education for benefit decisions."
+    "description": "Clear, engaging education for benefit decisions.",
+    "fullDescription": "Educational communication is essential for employees to make informed benefit decisions. Our experienced Benefits Representatives conduct one-on-one and group meetings, provide enrollment materials, and offer ongoing support to ensure employees understand and maximize their benefits.",
+    "features": [
+      "On-site employee enrollment meetings",
+      "Personalized benefit education",
+      "Clear, jargon-free materials",
+      "Benefits counseling and decision support",
+      "New hire orientation programs",
+      "Annual benefits refresher workshops"
+    ],
+    "benefits": "Higher employee engagement and benefits satisfaction",
+    "link": "tel:+1-800-334-3310"
   },
   {
-    "name": "Enrollment Platforms",
-    "description": "Streamlined, user-friendly enrollment systems."
+    "name": "Electronic Enrollment Platform",
+    "description": "Streamlined, user-friendly enrollment systems.",
+    "fullDescription": "Our modern electronic enrollment platform simplifies the benefits selection process for both employers and employees. The system streamlines data collection, integrates with payroll, generates compliance reports, and provides employees with 24/7 access to enrollment resources.",
+    "features": [
+      "User-friendly online enrollment interface",
+      "Mobile app for benefits management",
+      "Automated payroll integration",
+      "Real-time compliance verification",
+      "Document generation and archiving",
+      "Employee self-service portal"
+    ],
+    "benefits": "Faster enrollment, fewer errors, better data accuracy",
+    "link": "tel:+1-800-334-3310"
   },
   {
-    "name": "Retirement & Annuities",
-    "description": "Strategic planning for long-term financial security."
+    "name": "Retirement Planning & Annuities",
+    "description": "Strategic planning for long-term financial security.",
+    "fullDescription": "We provide comprehensive retirement planning services including 403(b) and 457(b) plan administration, annuity selection, and individual retirement strategy development. Our financial professionals help employees build secure retirement portfolios through diverse investment options.",
+    "features": [
+      "403(b) and 457(b) plan administration",
+      "Annuity product selection and comparison",
+      "Investment portfolio management",
+      "Retirement income projection",
+      "Estate planning consultation",
+      "Long-term care planning"
+    ],
+    "benefits": "Employees achieve retirement confidence and financial security",
+    "link": "tel:+1-800-334-3310"
   },
   {
     "name": "Major Medical & Supplemental Plans",
-    "description": "Comprehensive healthcare coverage solutions."
+    "description": "Comprehensive healthcare coverage solutions.",
+    "fullDescription": "We partner with leading carriers to provide major medical insurance, supplemental health plans, accident coverage, and critical illness protection. Our plans fill coverage gaps and provide financial security against unexpected healthcare costs.",
+    "features": [
+      "Group health insurance plans",
+      "Supplemental health coverage",
+      "Accident and injury protection",
+      "Critical illness insurance",
+      "Medical gap plans",
+      "Life and disability insurance"
+    ],
+    "benefits": "Complete healthcare protection for employees and families",
+    "link": "tel:+1-800-334-3310"
   },
   {
-    "name": "Benefits Compliance",
-    "description": "Ensure adherence to regulatory requirements."
+    "name": "Compliance & Administration",
+    "description": "Ensure adherence to regulatory requirements.",
+    "fullDescription": "Our compliance expertise ensures your organization meets all federal and state benefits regulations. We provide continuous monitoring, documentation, amendment preparation, and regulatory guidance to keep your benefits programs fully compliant.",
+    "features": [
+      "Regulatory compliance monitoring",
+      "Plan document review and amendments",
+      "FMLA administration",
+      "Workers' compensation coordination",
+      "Audit preparation and documentation",
+      "Claims review and management"
+    ],
+    "benefits": "Avoid penalties and ensure peace of mind with complete compliance",
+    "link": "tel:+1-800-334-3310"
+  },
+  {
+    "name": "Call Center Support",
+    "description": "Live benefits counseling and employee support.",
+    "fullDescription": "Our dedicated call center provides live support to employees during business hours with prompt callback service for after-hours inquiries. Employees speak directly with knowledgeable representatives who provide benefits counseling, claim status updates, and enrollment assistance.",
+    "features": [
+      "Live representative support during business hours",
+      "After-hours message callbacks next business day",
+      "Benefits counseling and guidance",
+      "Claim status tracking",
+      "Enrollment assistance",
+      "Email and web-based support options"
+    ],
+    "benefits": "Employees get answers fast from real people",
+    "link": "tel:+1-800-334-3310"
   }
 ]

@@ -100,20 +100,41 @@
 <header>
   <nav>
     <div class="logo-container">
-      <img src="../assets/images/team/tpgbenefitslogowht.png" alt="The Petra Group" class="logo-img">
+      <img src="../assets/petra-group-logo-white.png" alt="The Petra Group" class="logo-img">
       <span class="logo-text">The Petra Group</span>
     </div>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="team.html">Team</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="carriers.html">Carriers</a></li>
-      <li><a href="contact.html">Contact</a></li>
+    <button class="hamburger" id="hamburger-menu" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html" onclick="closeMenu()">Home</a></li>
+      <li><a href="about.html" onclick="closeMenu()">About</a></li>
+      <li><a href="team.html" onclick="closeMenu()">Team</a></li>
+      <li><a href="services.html" onclick="closeMenu()">Services</a></li>
+      <li><a href="carriers.html" onclick="closeMenu()">Carriers</a></li>
+      <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>
     </ul>
     <div id="auth-nav"></div>
   </nav>
 </header>
+
+<script>
+function toggleMenu() {
+  const menu = document.getElementById('nav-links');
+  const hamburger = document.getElementById('hamburger-menu');
+  menu.classList.toggle('active');
+  hamburger.classList.toggle('active');
+}
+
+function closeMenu() {
+  const menu = document.getElementById('nav-links');
+  const hamburger = document.getElementById('hamburger-menu');
+  menu.classList.remove('active');
+  hamburger.classList.remove('active');
+}
+</script>
 
 <div class="dashboard-header">
   <div id="dashboard-header">
@@ -249,6 +270,33 @@ window.handleLogout = function() {
   logout();
   window.location.href = 'index.html';
 };
+
+// Pexels API Image Loading
+const PEXELS_API_KEY = '34bnCdunaiGUOBl9tVdJddI77uK4FfRxZNoZ2FkRLQWBc26wUaVTmQ51';
+
+async function loadPexelsImages() {
+  try {
+    const keywords = ['business analytics', 'team collaboration', 'professional workspace', 'data insights'];
+    const images = document.querySelectorAll('[data-pexels]');
+    
+    const imagePromises = keywords.map((keyword) =>
+      fetch(`https://api.pexels.com/v1/search?query=${keyword}&per_page=1&page=${Math.floor(Math.random() * 10)}`,
+        { headers: { Authorization: PEXELS_API_KEY } }
+      ).then(res => res.json())
+    );
+
+    const allData = await Promise.all(imagePromises);
+    allData.forEach((data, index) => {
+      if (data.photos && data.photos.length > 0 && images[index]) {
+        images[index].src = data.photos[0].src.medium;
+      }
+    });
+  } catch (error) {
+    console.warn('Could not load Pexels images:', error);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadPexelsImages);
 </script>
 
 </body>

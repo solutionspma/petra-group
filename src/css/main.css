@@ -40,8 +40,13 @@ header nav {
 }
 
 .logo-img {
-  height: 50px;
+  height: 70px;
   width: auto;
+  min-width: 70px;
+  object-fit: contain;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .logo-text {
@@ -63,6 +68,41 @@ header nav {
 .nav-links a:hover {
   color: var(--gold);
 }
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  position: relative;
+  width: 30px;
+  height: 24px;
+}
+
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background: #fff;
+  margin: 5px 0;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(10px, 10px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
 
 /* Hero Section */
 .hero {
@@ -192,10 +232,19 @@ header nav {
   background: linear-gradient(135deg, var(--gold), #b8912f);
 }
 
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
 .pexels-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   transition: transform 0.3s ease;
 }
 
@@ -211,11 +260,21 @@ header nav {
   height: 250px !important;
 }
 
+.circle-frame img {
+  object-fit: cover;
+  object-position: center;
+}
+
 /* Rounded Square Frame */
 .rounded-square-frame {
   border-radius: 20px !important;
   width: 100%;
   margin: -30px -30px 20px -30px !important;
+}
+
+.rounded-square-frame img {
+  object-fit: cover;
+  object-position: center;
 }
 
 /* Footer */
@@ -251,21 +310,215 @@ footer p {
 }
 
 /* Responsive */
+/* Tablet & Small Desktop */
 @media (max-width: 768px) {
-  .hero h1 {
-    font-size: 2em;
+  header {
+    padding: 10px 15px;
+  }
+
+  header nav {
+    position: relative;
+  }
+
+  .logo-img {
+    height: 50px;
+    min-width: 50px;
+  }
+
+  .logo-text {
+    font-size: 1.1em;
+  }
+
+  .hamburger {
+    display: block;
   }
 
   .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #000;
     flex-direction: column;
-    gap: 15px;
+    gap: 0;
+    width: 100%;
+    padding: 15px 15px;
+    border-top: 1px solid #333;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .nav-links.active {
+    max-height: 500px;
+  }
+
+  .nav-links a {
+    padding: 12px 0;
+    font-size: 0.95em;
+    display: block;
+    border-bottom: 1px solid #333;
+  }
+
+  .nav-links a:last-child {
+    border-bottom: none;
+  }
+
+  .hero {
+    padding: 60px 20px;
+    min-height: 300px;
+  }
+
+  .hero h1 {
+    font-size: 2em;
+    margin-bottom: 15px;
+  }
+
+  .hero p {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+  }
+
+  .section {
+    padding: 40px 20px;
+  }
+
+  .section h2 {
+    font-size: 1.6em;
+    margin-bottom: 30px;
+  }
+
+  .section h1 {
+    font-size: 1.8em;
+    margin-bottom: 25px;
   }
 
   .grid {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .card-image {
+    margin: -20px -20px 15px -20px;
+    height: 200px;
+  }
+
+  .btn {
+    padding: 12px 20px;
+    margin: 8px 0;
+    width: 100%;
+    font-size: 0.95em;
+  }
+}
+
+/* Mobile Phones */
+@media (max-width: 480px) {
+  header {
+    padding: 8px 12px;
+  }
+
+  .logo-container {
+    gap: 8px;
+  }
+
+  .logo-img {
+    height: 40px;
+    min-width: 40px;
+  }
+
+  .logo-text {
+    font-size: 1em;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .nav-links {
+    max-height: 0;
+    padding: 0 15px;
+  }
+
+  .nav-links.active {
+    max-height: 400px;
+    padding: 15px 15px;
+  }
+
+  .nav-links a {
+    padding: 10px 0;
+    font-size: 0.85em;
+  }
+
+  .hero {
+    padding: 40px 15px;
+    min-height: 250px;
+  }
+
+  .hero h1 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+
+  .hero p {
+    font-size: 0.95em;
+    margin-bottom: 15px;
   }
 
   .section {
-    padding: 50px 20px;
+    padding: 30px 15px;
+  }
+
+  .section h2 {
+    font-size: 1.4em;
+    margin-bottom: 20px;
+  }
+
+  .section h1 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  .card-image {
+    margin: -15px -15px 12px -15px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rounded-square-frame {
+    width: calc(100% + 30px) !important;
+    margin-left: -15px !important;
+    margin-right: -15px !important;
+  }
+
+  .rounded-square-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .card h3 {
+    font-size: 1em;
+    margin-bottom: 10px;
+  }
+
+  .card p {
+    font-size: 0.9em;
+  }
+
+  .btn {
+    padding: 10px 16px;
+    margin: 6px 0;
+    font-size: 0.9em;
   }
 }
