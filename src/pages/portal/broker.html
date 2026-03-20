@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Broker Portal | The Petra Group</title>
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+<header>
+  <nav>
+    <div class="logo-container">
+      <img src="../../assets/petra-group-logo-white.png" alt="The Petra Group" class="logo-img">
+      <span class="logo-text">The Petra Group</span>
+    </div>
+    <button class="hamburger" id="hamburger-menu" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html" onclick="closeMenu()">Portal Home</a></li>
+      <li><a href="agent.html" onclick="closeMenu()">Agent</a></li>
+      <li><a href="management.html" onclick="closeMenu()">Management</a></li>
+      <li><a href="training.html" onclick="closeMenu()">Training</a></li>
+      <li><a href="documents.html" onclick="closeMenu()">Documents</a></li>
+    </ul>
+  </nav>
+</header>
+<script>
+function toggleMenu() { const menu = document.getElementById('nav-links'); const hamburger = document.getElementById('hamburger-menu'); menu.classList.toggle('active'); hamburger.classList.toggle('active'); }
+function closeMenu() { const menu = document.getElementById('nav-links'); const hamburger = document.getElementById('hamburger-menu'); menu.classList.remove('active'); hamburger.classList.remove('active'); }
+</script>
+<main class="section" style="max-width: 1100px; margin: 40px auto;">
+  <h1>Broker Portal</h1>
+  <p>This section is for broker workflows: client support, commissions, and documents.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:20px;">
+    <a class="btn" href="training.html">Go to Training</a>
+    <a class="btn" href="documents.html">Go to Document Depot</a>
+    <a class="btn" href="../dashboard.html">Legacy Dashboard</a>
+  </div>
+</main>
+<footer style="text-align:center;padding:16px;background:#000;color:#fff;">&copy; 2026 TPG Benefits</footer>
+<script type="module">
+import { requireRole } from '../../js/auth.stub.js';
+if (!requireRole(['agent','broker','management','admin'])) throw new Error('redirecting');
+</script>
+</body>
+</html>

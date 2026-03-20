@@ -144,7 +144,7 @@ function closeMenu() {
 
 <div class="dashboard-content">
   <div class="security-note">
-    <strong>⚠️ Security Notice:</strong> This is a demonstration portal. Authentication will be enforced in production. Do not enter real credentials or sensitive data.
+    <strong>🔒 Secure Portal:</strong> This area is the evolving TPG Benefits portal. Next steps include OAuth/SAML login, role-based policy checks, and content access controls.
   </div>
 
   <div id="dashboard-content"></div>
@@ -173,9 +173,9 @@ import { getRoleLabel } from '../js/roles.js';
 document.addEventListener('DOMContentLoaded', () => {
   const user = getCurrentUser();
   
-  // Redirect to login if not authenticated
+  // Redirect to portal login if not authenticated
   if (!user) {
-    window.location.href = 'login.html';
+    window.location.href = 'portal/login.html';
     return;
   }
 

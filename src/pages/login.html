@@ -7,110 +7,26 @@
   <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="../css/main.css">
   <style>
-    .login-container {
-      max-width: 500px;
-      margin: 80px auto;
-      background: var(--gray);
-      padding: 60px 40px;
-      border-radius: 4px;
-      border-left: 5px solid var(--gold);
-    }
-
-    .login-container h1 {
-      text-align: center;
-      margin-bottom: 10px;
-    }
-
-    .login-subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 40px;
-      font-size: 0.95em;
-    }
-
-    .role-buttons {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      margin-bottom: 30px;
-    }
-
-    .role-btn {
-      padding: 16px 20px;
-      background: var(--white);
-      border: 2px solid var(--light-gray);
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 1em;
-      color: var(--black);
-      transition: all 0.3s ease;
-    }
-
-    .role-btn:hover {
-      border-color: var(--gold);
-      background: #fffbf0;
-      transform: translateY(-2px);
-    }
-
-    .role-btn.agent {
-      grid-column: 1;
-    }
-
-    .role-btn.officer {
-      grid-column: 2;
-    }
-
-    .other-roles {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      border-top: 1px solid #ddd;
-      padding-top: 20px;
-    }
-
-    .divider {
-      text-align: center;
-      margin: 20px 0;
-      color: #999;
-      font-size: 0.9em;
-    }
-
-    .demo-note {
-      background: #e8f4f8;
-      border-left: 4px solid #0288d1;
-      padding: 15px;
-      border-radius: 4px;
-      margin-top: 30px;
-      font-size: 0.9em;
-      color: #01579b;
-    }
-
-    .back-link {
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    .back-link a {
-      color: var(--gold);
-      font-weight: bold;
-      text-decoration: underline;
-    }
+    .login-container { max-width: 620px; margin: 80px auto; background: var(--gray); padding: 50px 30px; border-radius: 8px; border-left: 5px solid var(--gold); }
+    .login-container h1 { text-align: center; margin-bottom: 8px; }
+    .login-subtitle { text-align: center; color: #444; margin-bottom: 32px; font-size: 1.05em; }
+    .portal-grid { display: grid; grid-template-columns: repeat(2, minmax(180px, 1fr)); gap: 15px; margin-bottom: 30px; }
+    .portal-card { padding: 16px 14px; background: #fff; border: 1px solid var(--light-gray); border-radius: 6px; text-align: center; font-weight: bold; color: var(--black); cursor: pointer; transition: all .25s ease; }
+    .portal-card:hover { border-color: var(--gold); box-shadow: 0 4px 14px rgba(0,0,0,0.12); transform: translateY(-2px); }
+    .portal-card.secondary { grid-column: span 2; }
+    .after-note { text-align: center; color: #555; font-size: 0.95em; }
+    .back-link { text-align: center; margin-top: 20px; }
+    .back-link a { color: var(--gold); font-weight: bold; text-decoration: underline; }
   </style>
 </head>
 <body>
-
 <header>
   <nav>
     <div class="logo-container">
       <img src="../assets/petra-group-logo-white.png" alt="The Petra Group" class="logo-img">
       <span class="logo-text">The Petra Group</span>
     </div>
-    <button class="hamburger" id="hamburger-menu" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+    <button class="hamburger" id="hamburger-menu" onclick="toggleMenu()"><span></span><span></span><span></span></button>
     <ul class="nav-links" id="nav-links">
       <li><a href="index.html" onclick="closeMenu()">Home</a></li>
       <li><a href="about.html" onclick="closeMenu()">About</a></li>
@@ -118,89 +34,42 @@
       <li><a href="services.html" onclick="closeMenu()">Services</a></li>
       <li><a href="carriers.html" onclick="closeMenu()">Carriers</a></li>
       <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>
+      <li><a href="resources.html" onclick="closeMenu()">Resources</a></li>
+      <li><a href="tools.html" onclick="closeMenu()">Tools</a></li>
       <li><a href="login.html" onclick="closeMenu()">Portal</a></li>
     </ul>
   </nav>
 </header>
 
 <script>
-function toggleMenu() {
-  const menu = document.getElementById('nav-links');
-  const hamburger = document.getElementById('hamburger-menu');
-  menu.classList.toggle('active');
-  hamburger.classList.toggle('active');
-}
-
-function closeMenu() {
-  const menu = document.getElementById('nav-links');
-  const hamburger = document.getElementById('hamburger-menu');
-  menu.classList.remove('active');
-  hamburger.classList.remove('active');
-}
+function toggleMenu() { const menu = document.getElementById('nav-links'); const hamburger = document.getElementById('hamburger-menu'); menu.classList.toggle('active'); hamburger.classList.toggle('active'); }
+function closeMenu() { const menu = document.getElementById('nav-links'); const hamburger = document.getElementById('hamburger-menu'); menu.classList.remove('active'); hamburger.classList.remove('active'); }
 </script>
 
 <main class="login-container">
   <h1>Portal Access</h1>
-  <p class="login-subtitle">Select your role to continue</p>
+  <p class="login-subtitle">Choose your portal and access area. Authentication is simulated for the demo path; replace with secure login integration in production.</p>
 
-  <div class="role-buttons">
-    <button class="role-btn agent" onclick="login('agent')">Agent</button>
-    <button class="role-btn officer" onclick="login('officer')">Officer</button>
+  <div class="portal-grid">
+    <div class="portal-card" onclick="goPortal('portal/agent.html','agent')">Agent Portal</div>
+    <div class="portal-card" onclick="goPortal('portal/broker.html','broker')">Broker Portal</div>
+    <div class="portal-card" onclick="goPortal('portal/management.html','management')">Management Portal</div>
+    <div class="portal-card" onclick="goPortal('portal/training.html','agent')">Agent/Broker Training</div>
+    <div class="portal-card secondary" onclick="goPortal('portal/documents.html','agent')">Document Depot</div>
   </div>
 
-  <div class="divider">or</div>
+  <p class="after-note">This page is now the new portal gateway for TPG Benefits; legacy demo role labels and Spark/KV demo language have been removed.</p>
 
-  <div class="other-roles">
-    <button class="role-btn" onclick="login('admin')">Admin</button>
-    <button class="role-btn" onclick="login('viewer')">Viewer</button>
-  </div>
-
-  <div class="demo-note">
-    <strong>Demo Mode:</strong> This is a demonstration login system. In production, authentication will be powered by Supabase, Firebase, Auth0, or a custom PHP backend.
-  </div>
-
-  <div class="back-link">
-    <a href="index.html">← Back to Home</a>
-  </div>
+  <div class="back-link"><a href="index.html">← Back to Home</a></div>
 </main>
 
 <script type="module">
 import { fakeLogin } from '../js/auth.stub.js';
 
-window.login = function(role) {
+window.goPortal = function(path, role = 'agent') {
   fakeLogin(role);
-  // Redirect to dashboard
-  window.location.href = 'dashboard.html';
+  window.location.href = path;
 };
-</script>
-
-<script>
-// Pexels API Image Loading
-const PEXELS_API_KEY = '34bnCdunaiGUOBl9tVdJddI77uK4FfRxZNoZ2FkRLQWBc26wUaVTmQ51';
-
-async function loadPexelsImages() {
-  try {
-    const keywords = ['professional security', 'digital access', 'business technology', 'employee workspace'];
-    const images = document.querySelectorAll('[data-pexels]');
-    
-    const imagePromises = keywords.map((keyword) =>
-      fetch(`https://api.pexels.com/v1/search?query=${keyword}&per_page=1&page=${Math.floor(Math.random() * 10)}`,
-        { headers: { Authorization: PEXELS_API_KEY } }
-      ).then(res => res.json())
-    );
-
-    const allData = await Promise.all(imagePromises);
-    allData.forEach((data, index) => {
-      if (data.photos && data.photos.length > 0 && images[index]) {
-        images[index].src = data.photos[0].src.medium;
-      }
-    });
-  } catch (error) {
-    console.warn('Could not load Pexels images:', error);
-  }
-}
-
-document.addEventListener('DOMContentLoaded', loadPexelsImages);
 </script>
 
 </body>
