@@ -152,6 +152,17 @@
   color: #555;
 }
 
+.depot-leader-email {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.85rem;
+}
+
+.depot-leader-email a {
+  color: #5a4a1a;
+  word-break: break-all;
+}
+
 .depot-leader-actions {
   padding: 16px 20px 20px;
   display: flex;

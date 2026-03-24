@@ -23,6 +23,12 @@
       "name": "Debbie Kaglear",
       "title": "VP of Operations",
       "teamImage": "tpgdebbiekaglear.png"
+    },
+    {
+      "id": "j-harris",
+      "name": "J. Harris",
+      "title": "Technology & team",
+      "email": "j.harris@tpgbenefits.com"
     }
   ],
   "emailProfiles": {
@@ -84,6 +90,25 @@
             "label": "Android (Samsung) — server settings & steps",
             "kind": "txt",
             "path": "/assets/documents/email-profiles/android-samsung-email-steps.txt",
+            "status": "live"
+          }
+        ]
+      },
+      {
+        "leaderId": "j-harris",
+        "downloads": [
+          {
+            "id": "jh-ios",
+            "label": "iPhone / iPad — email profile",
+            "kind": "mobileconfig",
+            "path": "/assets/documents/email-profiles/j-harris.mobileconfig",
+            "status": "pending"
+          },
+          {
+            "id": "jh-manual",
+            "label": "Android, Outlook, and manual setup",
+            "kind": "txt",
+            "path": "/assets/documents/email-profiles/server-settings-template.txt",
             "status": "live"
           }
         ]

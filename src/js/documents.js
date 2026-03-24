@@ -98,6 +98,11 @@ function renderLeaderSection(data) {
             <div class="depot-leader-meta">
               <h3>${escapeHtml(leader.name)}</h3>
               <span>${escapeHtml(leader.title)}</span>
+              ${
+                leader.email
+                  ? `<span class="depot-leader-email"><a href="mailto:${escapeHtml(leader.email)}">${escapeHtml(leader.email)}</a></span>`
+                  : ''
+              }
             </div>
           </div>
           <div class="depot-leader-actions">
