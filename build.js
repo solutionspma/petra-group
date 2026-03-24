@@ -27,9 +27,9 @@ export function isDriveConfigured() {
 
   fs.writeFileSync(path.join(distJsDir, 'supabase-runtime-config.js'), content, 'utf8');
   if (url && key) {
-    console.log('✅ Supabase runtime config written (My Drive enabled)');
+    console.log('✅ Supabase runtime config written (My Drive cloud mode)');
   } else {
-    console.log('ℹ️  SUPABASE_URL / SUPABASE_ANON_KEY not set — My Drive page shows setup instructions');
+    console.log('ℹ️  SUPABASE_URL / SUPABASE_ANON_KEY not set — My Drive uses browser demo (localStorage)');
   }
 }
 
