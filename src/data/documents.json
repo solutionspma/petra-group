@@ -29,10 +29,22 @@
       "name": "J. Harris",
       "title": "Technology & team",
       "email": "j.harris@tpgbenefits.com"
+    },
+    {
+      "id": "harry-christophe",
+      "name": "Harry Christophe",
+      "title": "Agent",
+      "email": "h.christophe@tpgbenefits.com"
+    },
+    {
+      "id": "deirdre-carter",
+      "name": "Deirdre Carter",
+      "title": "Agent",
+      "email": "d.carter@tpgbenefits.com"
     }
   ],
   "emailProfiles": {
-    "title": "Leadership email setup",
+    "title": "Leadership & agent email setup",
     "description": "One published mail settings file feeds both Apple devices and Android: Android users get a guided, copy-friendly walkthrough built from the same technical fields (servers, ports, security). Replace pending entries by uploading the mail settings file from your provider and setting status to \"live\" in documents.json.",
     "iphoneHelp": "On iPhone or iPad: tap your profile link → Allow → open Settings → Profile Downloaded → Install. You may need your device passcode. There is no safe generic script that injects credentials; the profile file from your provider is the supported method.",
     "androidHelp": "Android (e.g. Galaxy S24) does not use .mobileconfig. Use Samsung Email or Outlook with the server settings sheet, or follow your provider’s Android steps. Exchange accounts often auto-discover when you enter email and password in Outlook.",
@@ -167,6 +179,30 @@
             "kind": "txt",
             "path": "/assets/documents/email-profiles/server-settings-template.txt",
             "status": "live"
+          }
+        ]
+      },
+      {
+        "leaderId": "harry-christophe",
+        "downloads": [
+          {
+            "id": "harry-ios",
+            "label": "iPhone / iPad — email profile",
+            "kind": "mobileconfig",
+            "path": "/assets/documents/email-profiles/harry-christophe.mobileconfig",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "leaderId": "deirdre-carter",
+        "downloads": [
+          {
+            "id": "deirdre-ios",
+            "label": "iPhone / iPad — email profile",
+            "kind": "mobileconfig",
+            "path": "/assets/documents/email-profiles/deirdre-carter.mobileconfig",
+            "status": "pending"
           }
         ]
       }
