@@ -5,7 +5,16 @@ for someone before you change JSON and redeploy, use **Netlify environment varia
 
 After you push the site with the `netlify/functions/profile-flags` function deployed:
 
---- Using a .env file (repo template) ---
+--- Dedicated file in repo: PROFILE_FLAGS.ENV ---
+
+The repo includes **PROFILE_FLAGS.ENV** (separate from `.env.example`). Edit that file for
+Kevin / other leaders, then import:
+
+      netlify env:import PROFILE_FLAGS.ENV
+
+Or upload **PROFILE_FLAGS.ENV** in the Netlify env-vars screen (Import from .env).
+
+--- Using a generic .env file ---
 
 1. In the **petra-group** folder, copy the template:
       cp .env.example .env
