@@ -3,97 +3,149 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Drive | TPG Private Files</title>
+  <title>My Drive | TPG</title>
   <link rel="stylesheet" href="../../css/reset.css">
   <link rel="stylesheet" href="../../css/main.css">
   <link rel="stylesheet" href="../../css/tpg-drive.css">
 </head>
-<body>
-<header>
-  <nav>
-    <div class="logo-container">
-      <img src="../../assets/petra-group-logo-white.png" alt="The Petra Group" class="logo-img">
-      <span class="logo-text">The Petra Group</span>
-    </div>
-    <button type="button" class="hamburger" id="hamburger-menu" aria-label="Open menu" onclick="toggleMenu()"><span></span><span></span><span></span></button>
-    <ul class="nav-links" id="nav-links">
-      <li><a href="../../index.html" onclick="closeMenu()">Main site</a></li>
-      <li><a href="index.html" onclick="closeMenu()">Portal home</a></li>
-      <li><a href="agent.html" onclick="closeMenu()">Agent</a></li>
-      <li><a href="broker.html" onclick="closeMenu()">Broker</a></li>
-      <li><a href="management.html" onclick="closeMenu()">Management</a></li>
-      <li><a href="training.html" onclick="closeMenu()">Training</a></li>
-      <li><a href="documents.html" onclick="closeMenu()">Document Depot</a></li>
-      <li><a href="drive.html" onclick="closeMenu()">My Drive</a></li>
-    </ul>
-  </nav>
-</header>
-<script>
-function toggleMenu() {
-  const menu = document.getElementById('nav-links');
-  const hamburger = document.getElementById('hamburger-menu');
-  menu.classList.toggle('active');
-  hamburger.classList.toggle('active');
-}
-function closeMenu() {
-  const menu = document.getElementById('nav-links');
-  const hamburger = document.getElementById('hamburger-menu');
-  menu.classList.remove('active');
-  hamburger.classList.remove('active');
-}
-</script>
+<body class="drive-page">
 
-<main class="drive-wrap" id="drive-main">
-  <h1 style="margin-bottom:8px">My Drive</h1>
-  <p id="drive-intro" style="color:#555;max-width:65ch;line-height:1.5;margin-bottom:12px">
-    Private cloud storage for TPG. With Supabase configured, you sign in with your work account and files are private per user. <strong>Until then, this page runs in demo mode</strong> — uploads stay in this browser only (localStorage), no server.
+<!-- Sign-in / setup only (no OneDrive chrome) -->
+<div id="drive-pre-app" class="drive-pre-app">
+  <p class="drive-pre-app-back"><a href="index.html">← Portal home</a> · <a href="../../index.html">Main site</a></p>
+  <h1 class="drive-pre-app-title">My Drive</h1>
+  <p id="drive-intro" class="drive-pre-app-intro">
+    Private storage for TPG. With Supabase configured, files are private per user. Until then, <strong>demo mode</strong> stores files in this browser only.
   </p>
-  <p id="drive-status" aria-live="polite" style="min-height:1.4em;margin-bottom:16px;font-size:0.9rem"></p>
-
-  <div id="drive-demo-banner" class="drive-demo-banner" hidden>
-    <strong>Demo mode</strong> — Try upload, download, and delete. Data never leaves this device. Add <code>SUPABASE_URL</code> + <code>SUPABASE_ANON_KEY</code> on Netlify and redeploy for real cloud storage. Append <code>?demo=1</code> to this URL to force demo even if Supabase is set.
-  </div>
+  <p id="drive-status" class="drive-pre-app-status" aria-live="polite"></p>
 
   <div id="drive-setup-msg" class="drive-setup-banner" hidden>
     <strong>Drive not configured on this build.</strong>
-    <p style="margin:10px 0 0">Add environment variables <code>SUPABASE_URL</code> and <code>SUPABASE_ANON_KEY</code> in Netlify (or your CI), then redeploy. Run the SQL in <code>supabase/drive-setup.sql</code> in the Supabase SQL editor. See comments in that file for creating users and the private bucket.</p>
+    <p style="margin:10px 0 0">Add <code>SUPABASE_URL</code> and <code>SUPABASE_ANON_KEY</code> in Netlify, redeploy, and run <code>supabase/drive-setup.sql</code>.</p>
   </div>
 
   <section id="drive-auth-panel" class="drive-auth-panel" hidden>
-    <h2 style="font-size:1.1rem;margin-bottom:12px">Sign in</h2>
+    <h2 class="drive-auth-heading">Sign in to My Drive</h2>
     <form id="drive-signin-form">
       <label for="drive-email">Work email</label>
       <input id="drive-email" type="email" autocomplete="username" required placeholder="you@tpgbenefits.com">
       <label for="drive-password">Password</label>
       <input id="drive-password" type="password" autocomplete="current-password" required>
-      <button type="submit" class="btn" style="margin-top:18px">Sign in to My Drive</button>
+      <button type="submit" class="btn drive-auth-submit">Sign in</button>
     </form>
   </section>
+</div>
 
-  <section id="drive-app-panel" class="drive-app-panel" hidden>
-    <div class="drive-toolbar">
-      <span class="drive-user-pill">Signed in as <strong id="drive-user-email"></strong></span>
-      <button type="button" class="btn" id="drive-upload-btn">Upload files</button>
+<!-- OneDrive-style app shell -->
+<div id="drive-app-panel" class="od-shell" hidden>
+  <header class="od-topbar">
+    <div class="od-topbar-left">
+      <span class="od-brand" aria-hidden="true">
+        <svg class="od-cloud" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>
+      </span>
+      <span class="od-brand-text">My Drive</span>
+      <span class="od-brand-caret" aria-hidden="true">▼</span>
+    </div>
+    <div class="od-topbar-actions">
+      <button type="button" class="od-btn od-btn-light" id="drive-upload-btn" title="Upload">
+        <span class="od-btn-icon" aria-hidden="true">↑</span> Upload
+      </button>
       <input type="file" id="drive-file-input" hidden multiple>
-      <button type="button" class="btn" id="drive-signout" style="background:#333;color:#fff;margin-left:auto">Sign out</button>
     </div>
-    <div class="drive-table-wrap">
-      <table class="drive-table" aria-label="Your files">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Size</th>
-            <th>Updated</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="drive-file-tbody"></tbody>
-      </table>
+    <div class="od-topbar-right">
+      <a href="documents.html" class="od-topbar-link">Document Depot</a>
+      <a href="index.html" class="od-topbar-link">Portal</a>
+      <span class="od-user-block">
+        <span class="od-user-avatar" aria-hidden="true"></span>
+        <span id="drive-user-email" class="od-user-name">—</span>
+      </span>
+      <button type="button" class="od-btn od-btn-ghost" id="drive-signout">Sign out</button>
     </div>
-  </section>
-</main>
+  </header>
 
-<footer style="text-align:center;padding:16px;background:#000;color:#fff;">&copy; 2026 TPG Benefits</footer>
+  <div class="od-body">
+    <aside class="od-sidebar" aria-label="Drive navigation">
+      <div class="od-sidebar-search-wrap">
+        <input type="search" id="drive-sidebar-search" class="od-sidebar-search" placeholder="Search My Drive" autocomplete="off" aria-label="Filter files">
+        <span class="od-search-icon" aria-hidden="true">🔍</span>
+      </div>
+      <nav class="od-side-nav">
+        <a href="#" class="od-side-link is-active" id="drive-nav-files" data-nav="files">Files</a>
+        <span class="od-side-link is-disabled">Recent <span class="od-soon">(soon)</span></span>
+        <span class="od-side-link is-disabled">Shared <span class="od-soon">(soon)</span></span>
+      </nav>
+      <div class="od-sidebar-bottom">
+        <p class="od-storage-line" id="drive-storage-hint">—</p>
+        <a href="documents.html" class="od-side-muted-link">Company library</a>
+      </div>
+    </aside>
+
+    <main class="od-main">
+      <div id="drive-demo-banner" class="od-demo-strip" hidden>
+        <strong>Demo mode</strong> — Files stay in this browser only (localStorage). Add <code>SUPABASE_URL</code> + <code>SUPABASE_ANON_KEY</code> on Netlify for cloud storage. Use <code>?demo=1</code> to force demo when Supabase is set.
+      </div>
+
+      <p id="drive-status-app" class="od-status-app" aria-live="polite"></p>
+
+      <div class="od-main-header">
+        <div class="od-main-title-row">
+          <h1 class="od-page-title">Files</h1>
+          <p class="od-breadcrumb"><span id="drive-breadcrumb">My Drive</span></p>
+        </div>
+        <div class="od-main-tools">
+          <label class="od-sort-label">
+            <span>Sort by</span>
+            <select id="drive-sort" class="od-select">
+              <option value="name-asc">Name (A–Z)</option>
+              <option value="name-desc">Name (Z–A)</option>
+              <option value="date-desc" selected>Date modified (newest)</option>
+              <option value="date-asc">Date modified (oldest)</option>
+            </select>
+          </label>
+          <div class="od-view-toggle" role="group" aria-label="View">
+            <button type="button" class="od-view-btn" id="drive-view-list" title="List">☰</button>
+            <button type="button" class="od-view-btn is-active" id="drive-view-grid" title="Tiles">▦</button>
+          </div>
+        </div>
+      </div>
+
+      <section id="drive-welcome" class="od-welcome" hidden>
+        <div class="od-welcome-brand"></div>
+        <div class="od-welcome-copy">
+          <h2 class="od-welcome-title">Welcome to My Drive</h2>
+          <p class="od-welcome-text">Upload files from the blue bar, switch between tiles and list, and use search in the sidebar to filter. Demo files stay in this browser until Supabase is connected.</p>
+          <button type="button" class="od-btn od-btn-primary" id="drive-welcome-dismiss">Get started</button>
+        </div>
+      </section>
+
+      <div id="drive-file-grid" class="od-grid" aria-live="polite"></div>
+
+      <div id="drive-list-wrap" class="od-list-wrap">
+        <table class="od-table" aria-label="Files list">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Size</th>
+              <th>Modified</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="drive-file-tbody"></tbody>
+        </table>
+      </div>
+
+      <p id="drive-empty" class="od-empty" hidden>No files match. Try upload or clear the search box.</p>
+    </main>
+  </div>
+</div>
+
+<footer class="od-footer">
+  <span>© 2026 The Petra Group</span>
+  <span class="od-footer-links">
+    <a href="../../contact.html">Contact</a>
+    <a href="documents.html">Document Depot</a>
+  </span>
+</footer>
 
 <script type="module" src="../../js/tpg-drive.js"></script>
 </body>

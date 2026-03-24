@@ -1,14 +1,19 @@
 /**
- * TPG My Drive — Supabase Storage when configured; otherwise local browser demo (no backend).
+ * TPG My Drive — Supabase or browser demo; OneDrive-style UI.
  */
 import { isDriveConfigured } from './supabase-runtime-config.js';
 
 const DEMO_STORAGE_KEY = 'tpg_mydrive_demo_v1';
 const DEMO_USER_LABEL = 'Demo session (this browser only)';
+const WELCOME_KEY = 'tpg_drive_welcome_dismissed';
 
 let supabase = null;
 let DRIVE_BUCKET = 'tpg-private';
 let currentUserId = null;
+/** @type {{ name: string, size: number|null, updated: string, path: string, demo: boolean }[]} */
+let rawFileItems = [];
+let appChromeBound = false;
+let isDemoSession = false;
 
 const $ = (id) => document.getElementById(id);
 
@@ -19,10 +24,12 @@ function useDemoMode() {
 }
 
 function setStatus(msg, isErr = false) {
-  const el = $('drive-status');
+  const appPanel = $('drive-app-panel');
+  const inApp = appPanel && !appPanel.hidden;
+  const el = inApp ? $('drive-status-app') : $('drive-status');
   if (!el) return;
   el.textContent = msg || '';
-  el.style.color = isErr ? '#b71c1c' : '#333';
+  el.style.color = isErr ? '#b71c1c' : inApp ? '#555' : '#333';
 }
 
 function formatBytes(n) {
@@ -38,7 +45,176 @@ function escapeHtml(s) {
   return d.innerHTML;
 }
 
-/* ---------- Demo (localStorage) ---------- */
+function showPreApp() {
+  const pre = $('drive-pre-app');
+  const app = $('drive-app-panel');
+  if (pre) pre.hidden = false;
+  if (app) app.hidden = true;
+}
+
+function showAppShell() {
+  const pre = $('drive-pre-app');
+  const app = $('drive-app-panel');
+  if (pre) pre.hidden = true;
+  if (app) app.hidden = false;
+  bindAppChrome();
+  applyWelcomeVisibility();
+  applyViewModeClass();
+}
+
+function bindAppChrome() {
+  if (appChromeBound) return;
+  appChromeBound = true;
+
+  $('drive-nav-files')?.addEventListener('click', (e) => e.preventDefault());
+
+  $('drive-view-grid')?.addEventListener('click', () => {
+    $('drive-view-grid')?.classList.add('is-active');
+    $('drive-view-list')?.classList.remove('is-active');
+    $('drive-app-panel')?.classList.remove('od-view-list');
+    $('drive-app-panel')?.classList.add('od-view-grid');
+  });
+
+  $('drive-view-list')?.addEventListener('click', () => {
+    $('drive-view-list')?.classList.add('is-active');
+    $('drive-view-grid')?.classList.remove('is-active');
+    $('drive-app-panel')?.classList.remove('od-view-grid');
+    $('drive-app-panel')?.classList.add('od-view-list');
+  });
+
+  $('drive-sort')?.addEventListener('change', () => renderAllFiles());
+  $('drive-sidebar-search')?.addEventListener('input', () => renderAllFiles());
+
+  $('drive-welcome-dismiss')?.addEventListener('click', () => {
+    try {
+      localStorage.setItem(WELCOME_KEY, '1');
+    } catch {
+      /* ignore */
+    }
+    $('drive-welcome').hidden = true;
+  });
+}
+
+function applyWelcomeVisibility() {
+  const w = $('drive-welcome');
+  if (!w) return;
+  try {
+    w.hidden = localStorage.getItem(WELCOME_KEY) === '1';
+  } catch {
+    w.hidden = false;
+  }
+}
+
+function applyViewModeClass() {
+  const shell = $('drive-app-panel');
+  if (!shell) return;
+  shell.classList.add('od-view-grid');
+  shell.classList.remove('od-view-list');
+}
+
+function getFilteredSortedItems() {
+  const q = ($('drive-sidebar-search')?.value || '').trim().toLowerCase();
+  const sort = $('drive-sort')?.value || 'date-desc';
+
+  let items = [...rawFileItems];
+  if (q) items = items.filter((f) => f.name.toLowerCase().includes(q));
+
+  items.sort((a, b) => {
+    switch (sort) {
+      case 'name-asc':
+        return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
+      case 'name-desc':
+        return b.name.localeCompare(a.name, undefined, { sensitivity: 'base' });
+      case 'date-asc':
+        return (a.updated || '').localeCompare(b.updated || '');
+      case 'date-desc':
+      default:
+        return (b.updated || '').localeCompare(a.updated || '');
+    }
+  });
+  return items;
+}
+
+function renderAllFiles() {
+  const items = getFilteredSortedItems();
+  const grid = $('drive-file-grid');
+  const tbody = $('drive-file-tbody');
+  const empty = $('drive-empty');
+
+  if (!grid || !tbody) return;
+
+  if (!items.length) {
+    grid.innerHTML = '';
+    tbody.innerHTML = '';
+    if (empty) empty.hidden = false;
+    return;
+  }
+  if (empty) empty.hidden = true;
+
+  grid.innerHTML = items
+    .map(
+      (f) => `
+    <div class="od-tile-wrap" role="group" aria-label="${escapeHtml(f.name)}">
+      <div class="od-tile" data-name="${escapeHtml(f.name)}" data-demo="${f.demo ? '1' : '0'}" data-path="${escapeHtml(f.path)}" tabindex="0">
+        <div class="od-tile-actions">
+          <button type="button" class="od-tile-action drive-dl" title="Download">↓</button>
+          <button type="button" class="od-tile-action del drive-del" title="Delete">×</button>
+        </div>
+        <span class="od-tile-icon" aria-hidden="true">📄</span>
+        <div class="od-tile-meta">
+          <span class="od-tile-name">${escapeHtml(f.name)}</span>
+          <span class="od-tile-size">${escapeHtml(formatBytes(f.size))}</span>
+        </div>
+      </div>
+    </div>`
+    )
+    .join('');
+
+  tbody.innerHTML = items
+    .map(
+      (f) => `
+    <tr data-name="${escapeHtml(f.name)}" data-demo="${f.demo ? '1' : '0'}" data-path="${escapeHtml(f.path)}">
+      <td>${escapeHtml(f.name)}</td>
+      <td>${escapeHtml(formatBytes(f.size))}</td>
+      <td class="od-list-muted">${f.updated ? escapeHtml(f.updated.slice(0, 19).replace('T', ' ')) : '—'}</td>
+      <td class="od-table-actions">
+        <button type="button" class="od-btn od-btn-light od-btn-sm drive-dl">Download</button>
+        <button type="button" class="od-btn od-btn-light od-btn-sm drive-del" style="color:#b71c1c">Delete</button>
+      </td>
+    </tr>`
+    )
+    .join('');
+
+  const bindRow = (root) => {
+    root.querySelectorAll('.drive-dl').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const row = btn.closest('[data-name]');
+        const name = row?.getAttribute('data-name');
+        const demo = row?.getAttribute('data-demo') === '1';
+        const path = row?.getAttribute('data-path') || '';
+        if (demo) downloadDemoFile(name);
+        else downloadFile(path, name);
+      });
+    });
+    root.querySelectorAll('.drive-del').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const row = btn.closest('[data-name]');
+        const name = row?.getAttribute('data-name');
+        const demo = row?.getAttribute('data-demo') === '1';
+        const path = row?.getAttribute('data-path') || '';
+        if (demo) deleteDemoFile(name);
+        else deleteFile(path);
+      });
+    });
+  };
+
+  bindRow(grid);
+  bindRow(tbody);
+}
+
+/* ---------- Demo ---------- */
 
 function loadDemoFiles() {
   try {
@@ -54,7 +230,7 @@ function saveDemoFiles(files) {
   try {
     localStorage.setItem(DEMO_STORAGE_KEY, JSON.stringify(files));
   } catch (e) {
-    setStatus('Storage full or blocked — try smaller files or another browser.', true);
+    setStatus('Storage full or blocked — try smaller files.', true);
     throw e;
   }
 }
@@ -79,37 +255,19 @@ function readFileAsEntry(file) {
   });
 }
 
-async function refreshDemoFileList() {
-  const tbody = $('drive-file-tbody');
-  if (!tbody) return;
+function syncRawFromDemo() {
+  rawFileItems = loadDemoFiles().map((f) => ({
+    name: f.name,
+    size: f.size ?? null,
+    updated: f.updated_at || '',
+    path: `demo/${f.name}`,
+    demo: true,
+  }));
+}
 
-  const files = loadDemoFiles().sort((a, b) => (b.updated_at || '').localeCompare(a.updated_at || ''));
-
-  if (!files.length) {
-    tbody.innerHTML = '<tr><td colspan="4" class="drive-muted">No files yet. Upload below.</td></tr>';
-    return;
-  }
-
-  tbody.innerHTML = files
-    .map((item) => {
-      const path = `demo/${item.name}`;
-      return `<tr data-path="${escapeHtml(path)}" data-name="${escapeHtml(item.name)}">
-        <td>${escapeHtml(item.name)}</td>
-        <td>${formatBytes(item.size)}</td>
-        <td class="drive-muted">${item.updated_at ? escapeHtml(item.updated_at.slice(0, 19).replace('T', ' ')) : '—'}</td>
-        <td class="drive-actions">
-          <button type="button" class="btn drive-dl" style="padding:6px 12px;font-size:0.85rem">Download</button>
-          <button type="button" class="btn drive-del" style="padding:6px 12px;font-size:0.85rem;background:#444;color:#fff">Delete</button>
-        </td>
-      </tr>`;
-    })
-    .join('');
-
-  tbody.querySelectorAll('tr').forEach((tr) => {
-    const name = tr.getAttribute('data-name');
-    tr.querySelector('.drive-dl')?.addEventListener('click', () => downloadDemoFile(name));
-    tr.querySelector('.drive-del')?.addEventListener('click', () => deleteDemoFile(name));
-  });
+function refreshDemoFileList() {
+  syncRawFromDemo();
+  renderAllFiles();
 }
 
 function downloadDemoFile(name) {
@@ -134,9 +292,8 @@ function downloadDemoFile(name) {
 }
 
 function deleteDemoFile(name) {
-  if (!confirm('Delete this file from demo storage?')) return;
-  const next = loadDemoFiles().filter((f) => f.name !== name);
-  saveDemoFiles(next);
+  if (!confirm('Delete this file?')) return;
+  saveDemoFiles(loadDemoFiles().filter((f) => f.name !== name));
   setStatus('File removed.');
   refreshDemoFileList();
 }
@@ -144,40 +301,38 @@ function deleteDemoFile(name) {
 async function handleDemoUpload(fileList) {
   if (!fileList?.length) return;
   setStatus('Uploading…');
-  const existing = loadDemoFiles();
-  const byName = Object.fromEntries(existing.map((f) => [f.name, f]));
-
+  const byName = Object.fromEntries(loadDemoFiles().map((f) => [f.name, f]));
   for (const file of fileList) {
     try {
       const entry = await readFileAsEntry(file);
       byName[entry.name] = entry;
     } catch (e) {
       setStatus(e.message || 'Upload failed', true);
-      await refreshDemoFileList();
+      refreshDemoFileList();
       return;
     }
   }
-
   saveDemoFiles(Object.values(byName));
   setStatus('Upload complete.');
   $('drive-file-input').value = '';
-  await refreshDemoFileList();
+  refreshDemoFileList();
 }
 
 function initDemoDrive() {
+  isDemoSession = true;
   $('drive-setup-msg') && ($('drive-setup-msg').hidden = true);
-  const banner = $('drive-demo-banner');
-  if (banner) banner.hidden = false;
+  $('drive-demo-banner') && ($('drive-demo-banner').hidden = false);
+  $('drive-storage-hint').textContent = 'Browser storage (demo) — not synced';
+  $('drive-breadcrumb').textContent = 'My Drive · Demo';
 
-  $('drive-auth-panel').hidden = true;
-  $('drive-app-panel').hidden = false;
+  showAppShell();
+
   $('drive-user-email').textContent = DEMO_USER_LABEL;
-
-  $('drive-signout').textContent = 'Clear all demo files';
-  $('drive-signout').onclick = async () => {
-    if (!confirm('Remove every file from demo My Drive in this browser?')) return;
+  $('drive-signout').textContent = 'Clear all files';
+  $('drive-signout').onclick = () => {
+    if (!confirm('Remove all demo files in this browser?')) return;
     localStorage.removeItem(DEMO_STORAGE_KEY);
-    setStatus('Demo storage cleared.');
+    setStatus('Cleared.');
     refreshDemoFileList();
   };
 
@@ -190,11 +345,8 @@ function initDemoDrive() {
 /* ---------- Supabase ---------- */
 
 async function refreshFileList() {
-  const tbody = $('drive-file-tbody');
-  if (!tbody || !supabase || !currentUserId) return;
-
-  tbody.innerHTML = '<tr><td colspan="4">Loading…</td></tr>';
-
+  if (!supabase || !currentUserId) return;
+  rawFileItems = [];
   const { data, error } = await supabase.storage.from(DRIVE_BUCKET).list(currentUserId, {
     limit: 200,
     offset: 0,
@@ -202,38 +354,21 @@ async function refreshFileList() {
   });
 
   if (error) {
-    tbody.innerHTML = `<tr><td colspan="4" style="color:#b71c1c">${escapeHtml(error.message)}</td></tr>`;
+    setStatus(error.message, true);
+    rawFileItems = [];
+    renderAllFiles();
     return;
   }
 
-  const rows = data || [];
+  rawFileItems = (data || []).map((item) => ({
+    name: item.name,
+    size: item.metadata?.size ?? null,
+    updated: item.updated_at || '',
+    path: `${currentUserId}/${item.name}`,
+    demo: false,
+  }));
 
-  if (!rows.length) {
-    tbody.innerHTML = '<tr><td colspan="4" class="drive-muted">No files yet. Upload below.</td></tr>';
-    return;
-  }
-
-  tbody.innerHTML = rows
-    .map((item) => {
-      const path = `${currentUserId}/${item.name}`;
-      return `<tr data-path="${escapeHtml(path)}" data-name="${escapeHtml(item.name)}">
-        <td>${escapeHtml(item.name)}</td>
-        <td>${formatBytes(item.metadata?.size)}</td>
-        <td class="drive-muted">${item.updated_at ? escapeHtml(item.updated_at.slice(0, 19).replace('T', ' ')) : '—'}</td>
-        <td class="drive-actions">
-          <button type="button" class="btn drive-dl" style="padding:6px 12px;font-size:0.85rem">Download</button>
-          <button type="button" class="btn drive-del" style="padding:6px 12px;font-size:0.85rem;background:#444;color:#fff">Delete</button>
-        </td>
-      </tr>`;
-    })
-    .join('');
-
-  tbody.querySelectorAll('tr').forEach((tr) => {
-    const path = tr.getAttribute('data-path');
-    const name = tr.getAttribute('data-name');
-    tr.querySelector('.drive-dl')?.addEventListener('click', () => downloadFile(path, name));
-    tr.querySelector('.drive-del')?.addEventListener('click', () => deleteFile(path));
-  });
+  renderAllFiles();
 }
 
 async function downloadFile(path, filename) {
@@ -252,7 +387,7 @@ async function downloadFile(path, filename) {
 }
 
 async function deleteFile(path) {
-  if (!confirm('Delete this file from your private drive?')) return;
+  if (!confirm('Delete this file?')) return;
   setStatus('');
   const { error } = await supabase.storage.from(DRIVE_BUCKET).remove([path]);
   if (error) {
@@ -285,16 +420,26 @@ async function handleUpload(fileList) {
 
 function showAuthedUI(user) {
   currentUserId = user.id;
-  $('drive-auth-panel').hidden = true;
-  $('drive-app-panel').hidden = false;
+  isDemoSession = false;
+  $('drive-demo-banner') && ($('drive-demo-banner').hidden = true);
+  $('drive-storage-hint').textContent = 'Private cloud (Supabase)';
+  $('drive-breadcrumb').textContent = `My Drive · ${user.email || user.id}`;
+
+  showAppShell();
+
   $('drive-user-email').textContent = user.email || user.id;
+  $('drive-signout').textContent = 'Sign out';
+  $('drive-signout').onclick = null;
+
   refreshFileList();
 }
 
 function showGuestUI() {
   currentUserId = null;
-  $('drive-auth-panel').hidden = false;
-  $('drive-app-panel').hidden = true;
+  isDemoSession = false;
+  showPreApp();
+  const auth = $('drive-auth-panel');
+  if (auth) auth.hidden = false;
 }
 
 async function initSupabaseDrive() {
@@ -306,25 +451,26 @@ async function initSupabaseDrive() {
 
   DRIVE_BUCKET = mod.DRIVE_BUCKET || 'tpg-private';
   supabase = createClient(mod.SUPABASE_URL, mod.SUPABASE_ANON_KEY, {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-      detectSessionInUrl: true,
-    },
+    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
   });
-
-  $('drive-signout').textContent = 'Sign out';
-  $('drive-signout').onclick = null;
 
   const {
     data: { session },
   } = await supabase.auth.getSession();
-  if (session?.user) showAuthedUI(session.user);
-  else showGuestUI();
+  if (session?.user) {
+    $('drive-auth-panel').hidden = true;
+    showAuthedUI(session.user);
+  } else {
+    showGuestUI();
+  }
 
   supabase.auth.onAuthStateChange((_event, session) => {
-    if (session?.user) showAuthedUI(session.user);
-    else showGuestUI();
+    if (session?.user) {
+      $('drive-auth-panel').hidden = true;
+      showAuthedUI(session.user);
+    } else {
+      showGuestUI();
+    }
   });
 
   $('drive-signin-form')?.addEventListener('submit', async (e) => {
@@ -337,6 +483,7 @@ async function initSupabaseDrive() {
   });
 
   $('drive-signout')?.addEventListener('click', async () => {
+    if (isDemoSession) return;
     await supabase.auth.signOut();
     setStatus('Signed out.');
   });
