@@ -190,7 +190,7 @@
             "label": "iPhone / iPad — email profile",
             "kind": "mobileconfig",
             "path": "/assets/documents/email-profiles/harry-christophe.mobileconfig",
-            "status": "pending"
+            "status": "live"
           }
         ]
       },
@@ -202,7 +202,7 @@
             "label": "iPhone / iPad — email profile",
             "kind": "mobileconfig",
             "path": "/assets/documents/email-profiles/deirdre-carter.mobileconfig",
-            "status": "pending"
+            "status": "live"
           }
         ]
       }
