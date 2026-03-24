@@ -33,7 +33,7 @@
   ],
   "emailProfiles": {
     "title": "Leadership email setup",
-    "description": "Each leader has an iOS configuration profile (from GoDaddy or Microsoft 365) when available, plus server details for Android Samsung Email, Outlook, or other clients. Replace pending profiles by uploading the .mobileconfig file from your email host and setting status to \"live\" in documents.json.",
+    "description": "One published mail settings file feeds both Apple devices and Android: Android users get a guided, copy-friendly walkthrough built from the same technical fields (servers, ports, security). Replace pending entries by uploading the mail settings file from your provider and setting status to \"live\" in documents.json.",
     "iphoneHelp": "On iPhone or iPad: tap your profile link → Allow → open Settings → Profile Downloaded → Install. You may need your device passcode. There is no safe generic script that injects credentials; the profile file from your provider is the supported method.",
     "androidHelp": "Android (e.g. Galaxy S24) does not use .mobileconfig. Use Samsung Email or Outlook with the server settings sheet, or follow your provider’s Android steps. Exchange accounts often auto-discover when you enter email and password in Outlook.",
     "people": [

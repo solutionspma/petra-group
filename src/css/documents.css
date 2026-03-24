@@ -236,6 +236,36 @@ a.depot-btn-outline {
   box-sizing: border-box;
 }
 
+.depot-android-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.depot-btn-android-guide {
+  background: #1b5e20;
+  color: #fff;
+}
+
+.depot-btn-android-guide:hover {
+  background: #2e7d32;
+  box-shadow: 0 4px 14px rgba(46, 125, 50, 0.35);
+}
+
+@media (max-width: 640px) {
+  .depot-android-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .depot-android-actions .depot-btn {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
 .depot-flip-row {
   margin-top: 4px;
   padding-top: 12px;

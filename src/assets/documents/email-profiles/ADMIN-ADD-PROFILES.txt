@@ -25,7 +25,11 @@ DOCUMENT DEPOT — EMAIL PROFILES (ADMIN)
    - There is no equivalent one-tap profile for consumer email in most cases.
    - Use the server-settings template and/or provider documentation; Outlook and Samsung Email support Exchange and IMAP using the published hostnames.
 
-7. Flip-card screen tutorial (Android / laptop / phone browser)
+7. Android guided setup (same mail settings file as source data)
+   - The site reads the XML from the published mail settings file in the browser, extracts hosts/ports/SSL, and builds a copy/paste Android walkthrough.
+   - Link: /portal/android-email-setup.html?leader=<leaderId> — also reachable as **Guided setup** next to each Android row in the depot.
+
+8. Flip-card screen tutorial (Android / laptop / phone browser)
    - Public page: /portal/email-setup-cards.html?leader=<leaderId> (e.g. kevin-dickerson)
    - Custom content: add "androidFlipTutorial" JSON next to each person in documents.json, or upload JSON via master Email profile admin.
    - Template: flip-tutorial-TEMPLATE.json in this folder. Placeholders: {{fullName}} {{firstName}} {{email}} {{company}}

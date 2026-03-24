@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Android mail setup | The Petra Group</title>
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/android-email-wizard.css">
+</head>
+<body>
+  <p id="ae-error" class="ae-error" hidden></p>
+
+  <div class="ae-page" id="ae-page">
+    <header class="ae-top">
+      <a href="documents.html">← Document Depot</a>
+      <h1 id="ae-h1">Android mail setup</h1>
+      <p id="ae-sub" class="ae-sub">Loading…</p>
+    </header>
+
+    <p id="ae-notice" class="ae-notice" hidden></p>
+
+    <div style="max-width:520px;margin:0 auto;padding:0 20px;">
+      <div class="ae-dots" id="ae-dots" aria-hidden="true"></div>
+    </div>
+
+    <main class="ae-main" id="ae-main"></main>
+
+    <p class="ae-hint">Swipe left/right between screens · Arrow keys on a keyboard</p>
+
+    <nav class="ae-nav" aria-label="Steps">
+      <button type="button" class="ae-btn-back" id="ae-prev">Back</button>
+      <button type="button" class="ae-btn-next" id="ae-next">Next</button>
+    </nav>
+  </div>
+
+  <script type="module" src="../../js/android-email-wizard.js"></script>
+</body>
+</html>

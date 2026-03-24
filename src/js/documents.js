@@ -58,6 +58,8 @@ function renderLeaderSection(data) {
         ? `/assets/images/team/${encodeURIComponent(leader.teamImage)}`
         : '';
 
+      const wizardHref = `android-email-setup.html?leader=${encodeURIComponent(person.leaderId)}`;
+
       const downloadsHtml = person.downloads
         .map((d) => {
           const href = resolvePath(d.path);
@@ -68,19 +70,24 @@ function renderLeaderSection(data) {
               ? '<span class="depot-badge depot-badge-live">Ready</span>'
               : '<span class="depot-badge depot-badge-pending">Awaiting file</span>';
 
-          const btnClass = isIos ? 'depot-btn depot-btn-primary' : 'depot-btn depot-btn-secondary';
-          const label = canUse
-            ? isIos
-              ? 'Install profile'
-              : 'Download'
-            : isIos
-              ? 'Profile not published yet'
-              : 'Unavailable';
+          if (!isIos) {
+            const downloadBtn = canUse
+              ? `<a class="depot-btn depot-btn-secondary" href="${escapeHtml(href)}" download>Download</a>`
+              : `<button type="button" class="depot-btn depot-btn-secondary" disabled>Download</button>`;
+            return `
+            <div class="depot-action-row depot-android-row">
+              <span class="depot-action-label">${escapeHtml(d.label)} ${badge}</span>
+              <div class="depot-android-actions">
+                <a class="depot-btn depot-btn-android-guide" href="${wizardHref}">Guided setup</a>
+                ${downloadBtn}
+              </div>
+            </div>`;
+          }
 
+          const btnClass = 'depot-btn depot-btn-primary';
+          const label = canUse ? 'Install profile' : 'Profile not published yet';
           const control = canUse
-            ? isIos
-              ? `<a class="${btnClass}" href="${escapeHtml(href)}" target="_blank" rel="noopener">${escapeHtml(label)}</a>`
-              : `<a class="${btnClass}" href="${escapeHtml(href)}" download>${escapeHtml(label)}</a>`
+            ? `<a class="${btnClass}" href="${escapeHtml(href)}" target="_blank" rel="noopener">${escapeHtml(label)}</a>`
             : `<button type="button" class="${btnClass}" disabled>${escapeHtml(label)}</button>`;
 
           return `
