@@ -3,13 +3,25 @@ KEVIN — SAMSUNG GALAXY S24 (ANDROID) QUICK SHEET
 
 Work email on a Galaxy S24 (or any modern Android phone)
 
-1. Install **Microsoft Outlook** from the Google Play Store (often the fastest path for Microsoft 365 / Exchange).
-2. Open Outlook → **Add account** → enter your **TPG work email** → sign in (complete MFA if your organization uses it).
-3. If the app asks for **server** or **manual** settings, use the hostnames and ports from your IT team or from the **Guided setup** / **step-by-step** links in the Document Depot (they read the same published mail settings your company uses elsewhere).
+Secure SSL/TLS settings (Kevin — copy into manual setup if asked)
+-----------------------------------------------------------------
+Username:     k.dickerson@tpgbenefits.com
+Password:     Your normal email account password (enter only on the phone — never share it).
+
+Incoming (IMAP):  mail.tpgbenefits.com   Port **993**   Security: SSL/TLS
+(POP3 is also available on port **995** if an app asks for POP — prefer IMAP when offered.)
+
+Outgoing (SMTP):  mail.tpgbenefits.com   Port **465**   Security: SSL/TLS
+
+IMAP, POP3, and SMTP require authentication (use the same username and password as above).
+
+1. Install **Microsoft Outlook** (or **Samsung Email**) from the Google Play Store.
+2. Add account → enter **k.dickerson@tpgbenefits.com** → when prompted for manual / advanced settings, use the server lines above.
+3. If the app offers **Exchange** or **Office 365** auto-setup first, try that; if it fails or asks for IMAP/SMTP, use the values in this sheet.
 
 Samsung Email (alternative)
 ---------------------------
-Settings → Accounts and backup → Accounts → Add account → **Exchange** (wording may vary by Android version). Use the same server details as above.
+Settings → Accounts and backup → Accounts → Add account → **Other** or **IMAP** (wording varies). Enter email, then paste **incoming** and **outgoing** server details from the block above.
 
 If setup fails
 --------------
