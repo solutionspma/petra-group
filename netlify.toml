@@ -4,6 +4,7 @@
 
 [build.environment]
   NODE_VERSION = "22"
+  # My Drive (Supabase): add in Netlify UI → SUPABASE_URL, SUPABASE_ANON_KEY, optional SUPABASE_DRIVE_BUCKET (default tpg-private)
 
 [functions]
   directory = "netlify/functions"

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Drive | TPG Private Files</title>
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/tpg-drive.css">
+</head>
+<body>
+<header>
+  <nav>
+    <div class="logo-container">
+      <img src="../../assets/petra-group-logo-white.png" alt="The Petra Group" class="logo-img">
+      <span class="logo-text">The Petra Group</span>
+    </div>
+    <button type="button" class="hamburger" id="hamburger-menu" aria-label="Open menu" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../../index.html" onclick="closeMenu()">Main site</a></li>
+      <li><a href="index.html" onclick="closeMenu()">Portal home</a></li>
+      <li><a href="agent.html" onclick="closeMenu()">Agent</a></li>
+      <li><a href="broker.html" onclick="closeMenu()">Broker</a></li>
+      <li><a href="management.html" onclick="closeMenu()">Management</a></li>
+      <li><a href="training.html" onclick="closeMenu()">Training</a></li>
+      <li><a href="documents.html" onclick="closeMenu()">Document Depot</a></li>
+      <li><a href="drive.html" onclick="closeMenu()">My Drive</a></li>
+    </ul>
+  </nav>
+</header>
+<script>
+function toggleMenu() {
+  const menu = document.getElementById('nav-links');
+  const hamburger = document.getElementById('hamburger-menu');
+  menu.classList.toggle('active');
+  hamburger.classList.toggle('active');
+}
+function closeMenu() {
+  const menu = document.getElementById('nav-links');
+  const hamburger = document.getElementById('hamburger-menu');
+  menu.classList.remove('active');
+  hamburger.classList.remove('active');
+}
+</script>
+
+<main class="drive-wrap" id="drive-main">
+  <h1 style="margin-bottom:8px">My Drive</h1>
+  <p style="color:#555;max-width:65ch;line-height:1.5;margin-bottom:12px">
+    Private cloud storage for TPG: your files stay in <strong>your</strong> folder. Sign in with the Supabase account your administrator created (email + password). This is separate from the portal demo login until Supabase auth is merged for the whole site.
+  </p>
+  <p id="drive-status" aria-live="polite" style="min-height:1.4em;margin-bottom:16px;font-size:0.9rem"></p>
+
+  <div id="drive-setup-msg" class="drive-setup-banner" hidden>
+    <strong>Drive not configured on this build.</strong>
+    <p style="margin:10px 0 0">Add environment variables <code>SUPABASE_URL</code> and <code>SUPABASE_ANON_KEY</code> in Netlify (or your CI), then redeploy. Run the SQL in <code>supabase/drive-setup.sql</code> in the Supabase SQL editor. See comments in that file for creating users and the private bucket.</p>
+  </div>
+
+  <section id="drive-auth-panel" class="drive-auth-panel" hidden>
+    <h2 style="font-size:1.1rem;margin-bottom:12px">Sign in</h2>
+    <form id="drive-signin-form">
+      <label for="drive-email">Work email</label>
+      <input id="drive-email" type="email" autocomplete="username" required placeholder="you@tpgbenefits.com">
+      <label for="drive-password">Password</label>
+      <input id="drive-password" type="password" autocomplete="current-password" required>
+      <button type="submit" class="btn" style="margin-top:18px">Sign in to My Drive</button>
+    </form>
+    <p id="drive-status" aria-live="polite"></p>
+  </section>
+
+  <section id="drive-app-panel" class="drive-app-panel" hidden>
+    <div class="drive-toolbar">
+      <span class="drive-user-pill">Signed in as <strong id="drive-user-email"></strong></span>
+      <button type="button" class="btn" id="drive-upload-btn">Upload files</button>
+      <input type="file" id="drive-file-input" hidden multiple>
+      <button type="button" class="btn" id="drive-signout" style="background:#333;color:#fff;margin-left:auto">Sign out</button>
+    </div>
+    <div class="drive-table-wrap">
+      <table class="drive-table" aria-label="Your files">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Size</th>
+            <th>Updated</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="drive-file-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer style="text-align:center;padding:16px;background:#000;color:#fff;">&copy; 2026 TPG Benefits</footer>
+
+<script type="module" src="../../js/tpg-drive.js"></script>
+</body>
+</html>
