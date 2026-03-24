@@ -3,6 +3,28 @@
  */
 
 const DATA_URL = new URL('../data/documents.json', import.meta.url);
+const EMAIL_OVERRIDE_KEY = 'tpg_email_profiles_override';
+
+function applyLocalEmailOverride(data) {
+  try {
+    const raw = localStorage.getItem(EMAIL_OVERRIDE_KEY);
+    if (!raw) return;
+    const o = JSON.parse(raw);
+    if (!o?.people || !Array.isArray(o.people)) return;
+    data.emailProfiles.people = data.emailProfiles.people.map((p) => {
+      const patch = o.people.find((x) => x.leaderId === p.leaderId);
+      return patch?.downloads ? { ...p, downloads: patch.downloads } : p;
+    });
+    const banner = document.getElementById('depot-preview-banner');
+    if (banner) {
+      banner.hidden = false;
+      banner.textContent =
+        'Preview mode: leadership email rows reflect a merge stored in this browser only. Deploy files + documents.json for all users.';
+    }
+  } catch (e) {
+    console.warn('Email profile override ignored', e);
+  }
+}
 
 function escapeHtml(s) {
   const div = document.createElement('div');
@@ -222,6 +244,8 @@ async function init() {
       '<p class="depot-empty">Could not load document catalog. Check your connection and try again.</p>';
     return;
   }
+
+  applyLocalEmailOverride(data);
 
   const metaTitle = document.getElementById('depot-meta-title');
   const metaSub = document.getElementById('depot-meta-sub');

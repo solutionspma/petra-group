@@ -48,7 +48,19 @@ function closeMenu() { const menu = document.getElementById('nav-links'); const 
 
 <main class="login-container">
   <h1>Portal Access</h1>
-  <p class="login-subtitle">Choose your portal and access area. Authentication is simulated for the demo path; replace with secure login integration in production.</p>
+  <p class="login-subtitle">Site owner: sign in with your email and temporary password, then set your real password (stored in this browser until Supabase is connected). Everyone else can use the portal shortcuts below.</p>
+
+  <form id="master-login-form" style="margin-bottom:28px;padding:20px;background:#fff;border:1px solid var(--light-gray);border-radius:8px;">
+    <h2 style="font-size:1.1rem;margin-bottom:12px;">Site owner (master)</h2>
+    <label for="master-email" style="display:block;font-weight:bold;margin-bottom:6px;font-size:0.9rem;">Email</label>
+    <input id="master-email" type="email" autocomplete="username" placeholder="solutions@pitchmarketing.agency" required style="width:100%;max-width:400px;padding:10px;border:1px solid #ccc;border-radius:6px;margin-bottom:12px;box-sizing:border-box;">
+    <label for="master-password" style="display:block;font-weight:bold;margin-bottom:6px;font-size:0.9rem;">Password</label>
+    <input id="master-password" type="password" autocomplete="current-password" required style="width:100%;max-width:400px;padding:10px;border:1px solid #ccc;border-radius:6px;margin-bottom:14px;box-sizing:border-box;">
+    <button type="submit" class="btn" style="display:inline-block;">Sign in as master</button>
+    <p id="master-login-err" style="color:#b71c1c;margin-top:12px;font-size:0.9rem;" role="alert"></p>
+  </form>
+
+  <p class="login-subtitle" style="margin-bottom:20px;">Portal shortcuts (demo roles):</p>
 
   <div class="portal-grid">
     <div class="portal-card" onclick="goPortal('portal/agent.html','agent')">Agent Portal</div>
@@ -64,12 +76,30 @@ function closeMenu() { const menu = document.getElementById('nav-links'); const 
 </main>
 
 <script type="module">
-import { fakeLogin } from '../js/auth.stub.js';
+import { fakeLogin, loginMaster } from '../js/auth.stub.js';
 
 window.goPortal = function(path, role = 'agent') {
   fakeLogin(role);
   window.location.href = path;
 };
+
+document.getElementById('master-login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const err = document.getElementById('master-login-err');
+  err.textContent = '';
+  const email = document.getElementById('master-email').value;
+  const password = document.getElementById('master-password').value;
+  const r = await loginMaster(email, password);
+  if (!r.ok) {
+    err.textContent = r.error;
+    return;
+  }
+  if (r.mustChangePassword) {
+    window.location.href = 'set-password.html';
+    return;
+  }
+  window.location.href = 'portal/index.html';
+});
 </script>
 
 </body>

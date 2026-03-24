@@ -62,9 +62,9 @@
           },
           {
             "id": "kevin-manual",
-            "label": "Android, Outlook, and manual setup",
+            "label": "Kevin — Android (Galaxy ‘BS 24’ quick sheet)",
             "kind": "txt",
-            "path": "/assets/documents/email-profiles/server-settings-template.txt",
+            "path": "/assets/documents/email-profiles/kevin-galaxy-bs24.txt",
             "status": "live"
           }
         ]

@@ -1,0 +1,22 @@
+KEVIN — ANDROID QUICK SHEET (Galaxy “BS 24” edition)
+=====================================================
+
+Yes, we’re calling it the BS 24. It still runs Android like a champ.
+
+What Kevin should do (Microsoft 365 / Exchange-style work email)
+----------------------------------------------------------------
+1. Install **Microsoft Outlook** from the Play Store (often the fastest path).
+2. Add account → enter work email → sign in (MFA if your org uses it).
+3. If autodiscover fails, use the values in **server-settings-template.txt** from the Document Depot (incoming/outgoing hostnames from GoDaddy or M365 admin).
+
+Samsung Email (alternative)
+-------------------------
+Settings → Accounts and backup → Accounts → Add account → **Exchange** (or Microsoft Exchange ActiveSync). Same server details as above.
+
+Reality check
+-------------
+There is no Apple-style one-tap profile for most consumer/work Android mail. Outlook or Samsung Email + correct server names is the supported path.
+
+If anything fails, confirm with IT: correct email domain, MFA app, and whether “modern authentication” is required.
+
+— TPG Benefits internal doc (keep it professional on client-facing decks; this copy is for the team.)

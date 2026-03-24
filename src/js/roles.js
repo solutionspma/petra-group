@@ -1,4 +1,5 @@
 export const ROLES = {
+  MASTER: 'master',
   ADMIN: 'admin',
   OFFICER: 'officer',
   AGENT: 'agent',
@@ -27,6 +28,7 @@ export function hasPermission(role, action) {
 
 export function getRoleLabel(role) {
   const labels = {
+    master: 'Site owner',
     admin: 'Administrator',
     officer: 'Officer',
     management: 'Management',

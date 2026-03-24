@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email profiles (master) | The Petra Group</title>
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/main.css">
+  <style>
+    .admin-ep { max-width: 900px; margin: 40px auto; padding: 0 20px 60px; }
+    .admin-ep h1 { margin-bottom: 12px; }
+    .admin-ep-lede { color: #444; margin-bottom: 24px; line-height: 1.5; }
+    .admin-ep-card {
+      border: 1px solid var(--light-gray);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 18px;
+      background: #fafafa;
+    }
+    .admin-ep-card h3 { margin-bottom: 4px; }
+    .admin-ep-meta { font-size: 0.9rem; color: #666; margin-bottom: 14px; }
+    .admin-ep-card label { display: block; font-weight: bold; font-size: 0.85rem; margin: 12px 0 6px; }
+    .admin-ep-card input[type="file"] { width: 100%; }
+    .admin-ep-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+    .admin-ep-actions button { padding: 12px 20px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; }
+    .admin-ep-primary { background: var(--gold); color: #1a1508; }
+    .admin-ep-secondary { background: #1a1a1a; color: #fff; }
+    #admin-ep-status { margin-top: 20px; padding: 16px; background: #fff9e6; border: 1px solid #e6d9a3; border-radius: 8px; font-size: 0.95rem; line-height: 1.5; }
+    .admin-ep-back { margin-bottom: 20px; }
+    .admin-ep-back a { font-weight: bold; color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo-container">
+      <img src="../../assets/petra-group-logo-white.png" alt="The Petra Group" class="logo-img">
+      <span class="logo-text">The Petra Group</span>
+    </div>
+    <button type="button" class="hamburger" id="hamburger-menu" aria-label="Open menu" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html" onclick="closeMenu()">Portal Home</a></li>
+      <li><a href="documents.html" onclick="closeMenu()">Document Depot</a></li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+function toggleMenu() {
+  const menu = document.getElementById('nav-links');
+  const hamburger = document.getElementById('hamburger-menu');
+  menu.classList.toggle('active');
+  hamburger.classList.toggle('active');
+}
+function closeMenu() {
+  const menu = document.getElementById('nav-links');
+  const hamburger = document.getElementById('hamburger-menu');
+  menu.classList.remove('active');
+  hamburger.classList.remove('active');
+}
+</script>
+
+<main class="admin-ep">
+  <p class="admin-ep-back"><a href="index.html">← Portal home</a></p>
+  <h1>Leadership email profiles</h1>
+  <p class="admin-ep-lede">
+    Site owner only. Stage GoDaddy or Microsoft <strong>.mobileconfig</strong> files and optional Android documents.
+    <strong>Download bundle</strong> gives you correctly named files plus an updated <code>documents.json</code> — copy into <code>src/assets/documents/email-profiles/</code> and <code>src/data/</code>, then build and deploy.
+    <strong>Preview (this browser)</strong> merges paths/status in the Document Depot for a quick check (links still need real files on the host).
+  </p>
+
+  <div id="admin-ep-form"></div>
+
+  <div class="admin-ep-actions">
+    <button type="button" class="admin-ep-primary" id="admin-ep-download">Download deploy bundle</button>
+    <button type="button" class="admin-ep-secondary" id="admin-ep-preview">Save preview (this browser)</button>
+  </div>
+  <div id="admin-ep-status" aria-live="polite"></div>
+</main>
+
+<footer style="text-align:center;padding:16px;background:#000;color:#fff;">&copy; 2026 TPG Benefits</footer>
+
+<script type="module" src="../../js/admin-email-profiles.js"></script>
+</body>
+</html>
