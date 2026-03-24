@@ -5,6 +5,27 @@ for someone before you change JSON and redeploy, use **Netlify environment varia
 
 After you push the site with the `netlify/functions/profile-flags` function deployed:
 
+--- Using a .env file (repo template) ---
+
+1. In the **petra-group** folder, copy the template:
+      cp .env.example .env
+
+2. Edit **.env** (gitignored): uncomment and set either `EMAIL_PROFILE_IOS_LIVE_JSON` or one or more
+   `EMAIL_IOS_LIVE_*` lines. Truthy values: 1, true, yes, live.
+
+3. Import into Netlify (either way):
+
+   • **CLI** (from petra-group, after `netlify login` and `netlify link`):
+        netlify env:import .env
+
+     To overwrite keys that already exist on the site:
+        netlify env:import .env --replace-existing
+
+   • **Dashboard:** Site configuration → Environment variables → look for **Import** / “Import from .env”
+     (wording varies) and upload or paste the same file.
+
+4. Redeploy is usually **not** required for function env; Kevin should refresh the depot page.
+
 --- Option 1: Netlify CLI (from your machine) ---
 
 Prereqs: install the CLI once (`npm i -g netlify-cli`) or use `npx netlify`. From the **petra-group** repo root:
