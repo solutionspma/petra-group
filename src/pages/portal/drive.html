@@ -45,10 +45,14 @@ function closeMenu() {
 
 <main class="drive-wrap" id="drive-main">
   <h1 style="margin-bottom:8px">My Drive</h1>
-  <p style="color:#555;max-width:65ch;line-height:1.5;margin-bottom:12px">
-    Private cloud storage for TPG: your files stay in <strong>your</strong> folder. Sign in with the Supabase account your administrator created (email + password). This is separate from the portal demo login until Supabase auth is merged for the whole site.
+  <p id="drive-intro" style="color:#555;max-width:65ch;line-height:1.5;margin-bottom:12px">
+    Private cloud storage for TPG. With Supabase configured, you sign in with your work account and files are private per user. <strong>Until then, this page runs in demo mode</strong> — uploads stay in this browser only (localStorage), no server.
   </p>
   <p id="drive-status" aria-live="polite" style="min-height:1.4em;margin-bottom:16px;font-size:0.9rem"></p>
+
+  <div id="drive-demo-banner" class="drive-demo-banner" hidden>
+    <strong>Demo mode</strong> — Try upload, download, and delete. Data never leaves this device. Add <code>SUPABASE_URL</code> + <code>SUPABASE_ANON_KEY</code> on Netlify and redeploy for real cloud storage. Append <code>?demo=1</code> to this URL to force demo even if Supabase is set.
+  </div>
 
   <div id="drive-setup-msg" class="drive-setup-banner" hidden>
     <strong>Drive not configured on this build.</strong>
@@ -64,7 +68,6 @@ function closeMenu() {
       <input id="drive-password" type="password" autocomplete="current-password" required>
       <button type="submit" class="btn" style="margin-top:18px">Sign in to My Drive</button>
     </form>
-    <p id="drive-status" aria-live="polite"></p>
   </section>
 
   <section id="drive-app-panel" class="drive-app-panel" hidden>
