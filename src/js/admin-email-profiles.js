@@ -1,5 +1,5 @@
 /**
- * Master-only: stage leadership email profile files, flip-tutorial JSON, and emit deploy artifacts.
+ * Master-only: stage leadership email profile files, Android step-guide JSON, and emit deploy artifacts.
  */
 
 import { requireMaster } from './auth.stub.js';
@@ -89,10 +89,10 @@ async function collectFlipJson(filesByLeader) {
       const text = await slot.flip.text();
       out[lid] = JSON.parse(text);
     } catch (e) {
-      throw new Error(`Invalid flip-tutorial JSON for ${lid}: ${e.message}`);
+      throw new Error(`Invalid step-guide JSON for ${lid}: ${e.message}`);
     }
     if (!out[lid].steps || !Array.isArray(out[lid].steps) || !out[lid].steps.length) {
-      throw new Error(`Flip JSON for ${lid} must include a non-empty "steps" array.`);
+      throw new Error(`Step-guide JSON for ${lid} must include a non-empty "steps" array.`);
     }
   }
   return out;
@@ -112,7 +112,7 @@ function renderForm(data, mount) {
           <input type="file" data-slot="ios" accept=".mobileconfig,application/x-apple-aspen-config">
           <label>Android / manual doc (optional — replaces second row file on deploy)</label>
           <input type="file" data-slot="android" accept=".txt,.pdf,.md">
-          <label>Flip-card tutorial (optional JSON — see <code>flip-tutorial-TEMPLATE.json</code>)</label>
+          <label>Step guide JSON (optional — see <code>flip-tutorial-TEMPLATE.json</code>)</label>
           <input type="file" data-slot="flip" accept=".json,application/json">
         </div>`;
     })
@@ -151,7 +151,7 @@ async function main() {
     const hasFlip = Object.keys(flipMap).length > 0;
     if (!hasBinary && !hasFlip) {
       statusEl.textContent =
-        'Choose at least one file: profile(s), Android doc(s), and/or flip-tutorial JSON per person.';
+        'Choose at least one file: profile(s), Android doc(s), and/or step-guide JSON per person.';
       return;
     }
 
@@ -174,7 +174,7 @@ async function main() {
 
     downloadJson('documents.json', merged);
     statusEl.innerHTML =
-      'Downloads started. Put binaries in <code>src/assets/documents/email-profiles/</code>, replace <code>src/data/documents.json</code> with the downloaded file, then <code>npm run build</code> and deploy. Flip JSON is merged into each person’s <code>androidFlipTutorial</code> field.';
+      'Downloads started. Put binaries in <code>src/assets/documents/email-profiles/</code>, replace <code>src/data/documents.json</code> with the downloaded file, then <code>npm run build</code> and deploy. Step-guide JSON is merged into each person’s <code>androidFlipTutorial</code> field.';
   });
 
   document.getElementById('admin-ep-preview').addEventListener('click', async () => {
@@ -201,7 +201,7 @@ async function main() {
 
     localStorage.setItem(OVERRIDE_KEY, JSON.stringify({ people, savedAt: new Date().toISOString() }));
     statusEl.innerHTML =
-      'Saved merge to <strong>this browser only</strong>. Open Document Depot and flip-card links to preview. <button type="button" id="admin-ep-clear-preview">Clear preview</button>';
+      'Saved merge to <strong>this browser only</strong>. Open Document Depot and step-guide links to preview. <button type="button" id="admin-ep-clear-preview">Clear preview</button>';
     document.getElementById('admin-ep-clear-preview').addEventListener('click', () => {
       localStorage.removeItem(OVERRIDE_KEY);
       statusEl.textContent = 'Preview cleared.';

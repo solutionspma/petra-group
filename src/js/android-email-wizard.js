@@ -185,7 +185,7 @@ function buildFallbackSteps(leader, androidDocHref) {
     title: 'Need help?',
     paragraphs: [
       'Contact your **TPG Benefits technical** contact if sign-in fails or MFA loops.',
-      'You can still use the **flip-card tutorial** from the depot for a slower, visual walkthrough.',
+      'You can still open the **step-by-step guide** from the depot for a paced walkthrough with the same tips.',
     ],
   });
 

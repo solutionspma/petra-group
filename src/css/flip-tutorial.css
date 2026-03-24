@@ -1,4 +1,4 @@
-/* Index-card style flip tutorial — phone / tablet / desktop */
+/* Step cards — one full screen per step (no flip), phone / tablet / desktop */
 
 .ft-page {
   min-height: 100dvh;
@@ -39,7 +39,7 @@
   color: rgba(255, 255, 255, 0.75);
   font-size: 0.88rem;
   margin-top: 6px;
-  max-width: 40ch;
+  max-width: 46ch;
 }
 
 .ft-main {
@@ -47,8 +47,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 20px 16px 100px;
+  justify-content: flex-start;
+  padding: 20px 16px 110px;
   touch-action: pan-y;
 }
 
@@ -87,42 +87,16 @@
   text-transform: uppercase;
 }
 
-/* Index card */
-.flip-card {
+/* Single index-card panel — all content visible */
+.ft-step-panel {
   width: 100%;
   max-width: 440px;
-  perspective: 1200px;
-  cursor: pointer;
-}
-
-.flip-card-inner {
-  position: relative;
-  min-height: min(52dvh, 420px);
-  transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
-  transform-style: preserve-3d;
-}
-
-.flip-card-inner.is-flipped {
-  transform: rotateY(180deg);
-}
-
-.flip-card-front,
-.flip-card-back {
-  position: absolute;
-  inset: 0;
   border-radius: 14px;
-  padding: 28px 24px 24px;
+  padding: 26px 22px 22px;
   box-shadow:
     0 12px 40px rgba(0, 0, 0, 0.35),
     0 0 0 1px rgba(0, 0, 0, 0.06);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
   box-sizing: border-box;
-}
-
-.flip-card-front {
-  display: flex;
-  flex-direction: column;
   background:
     linear-gradient(90deg, #c62828 0%, #c62828 5px, transparent 5px),
     repeating-linear-gradient(
@@ -133,19 +107,7 @@
     ),
     #faf6ed;
   border: 1px solid #c4b896;
-}
-
-.flip-card-back {
-  background:
-    repeating-linear-gradient(
-      transparent,
-      transparent 27px,
-      rgba(180, 170, 140, 0.35) 27px,
-      rgba(180, 170, 140, 0.35) 28px
-    ),
-    #f7f2e8;
-  border: 1px solid #b0a080;
-  transform: rotateY(180deg);
+  max-height: min(70dvh, 560px);
   overflow-y: auto;
 }
 
@@ -154,49 +116,82 @@
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: #6b5a3a;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
-.ft-card-front h2 {
+.ft-step-panel h2 {
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: clamp(1.35rem, 4vw, 1.75rem);
+  font-size: clamp(1.25rem, 4vw, 1.65rem);
   line-height: 1.25;
   color: #1a1610;
   margin-bottom: 14px;
 }
 
-.ft-card-front .ft-tap-hint {
-  margin-top: auto;
-  padding-top: 20px;
-  font-size: 0.85rem;
-  color: #5c4d32;
-  font-weight: bold;
-}
-
-.ft-card-back .ft-body {
+.ft-body {
   font-size: 1rem;
   line-height: 1.55;
   color: #2a2419;
 }
 
-.ft-card-back .ft-body strong {
+.ft-body strong {
   color: #1a1208;
 }
 
-.ft-card-back .ft-tip {
+.ft-tip {
   margin-top: 16px;
   padding: 12px 14px;
   background: rgba(201, 162, 63, 0.2);
   border-left: 4px solid var(--gold, #c9a23f);
   font-size: 0.9rem;
   border-radius: 0 8px 8px 0;
+  color: #2a2419;
 }
 
-.ft-card-back .ft-img {
+.ft-img {
   max-width: 100%;
   border-radius: 8px;
-  margin: 12px 0;
+  margin: 14px 0 0;
   border: 1px solid #c4b896;
+}
+
+.ft-copy-block {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid #c4b896;
+  border-radius: 10px;
+}
+
+.ft-copy-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #5c4d32;
+  margin-bottom: 6px;
+}
+
+.ft-copy-value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.88rem;
+  word-break: break-all;
+  color: #1a1610;
+  margin-bottom: 8px;
+}
+
+.ft-copy-btn {
+  padding: 7px 12px;
+  font-size: 0.82rem;
+  font-weight: bold;
+  border: 1px solid #1a1610;
+  background: #1a1610;
+  color: #faf6ed;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.ft-copy-btn.is-done {
+  border-color: #2e7d32;
+  background: #2e7d32;
 }
 
 .ft-nav {
@@ -241,7 +236,7 @@
   text-align: center;
   color: rgba(255, 255, 255, 0.45);
   font-size: 0.78rem;
-  margin-top: 12px;
+  margin-top: 14px;
 }
 
 .ft-error {
@@ -255,28 +250,8 @@
   border-radius: 10px;
 }
 
-.ft-flip-btn {
-  margin-top: 16px;
-  padding: 10px 16px;
-  font-weight: bold;
-  background: #1a1610;
-  color: #faf6ed;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-
-.ft-flip-btn:hover {
-  background: #2a2419;
-}
-
 @media (min-width: 900px) {
   .ft-main {
     padding-bottom: 120px;
-  }
-
-  .flip-card-inner {
-    min-height: 440px;
   }
 }

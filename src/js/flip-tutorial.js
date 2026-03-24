@@ -1,7 +1,9 @@
 /**
- * Screen-by-screen flip cards for Android / Outlook email setup.
- * Data: ?leader=<leaderId> + documents.json (androidFlipTutorial or built-in default).
+ * Step cards for Android / Outlook email help — one full screen per step (no flip).
+ * Enriches with server values parsed from the same published mail settings file as the company mail slot.
  */
+
+import { extractMailSettingsFromMobileConfigUrl } from './plist-email-extract.js';
 
 const DATA_URL = new URL('../data/documents.json', import.meta.url);
 const EMAIL_OVERRIDE_KEY = 'tpg_email_profiles_override';
@@ -17,6 +19,13 @@ function formatBody(text) {
   let h = escapeHtml(text);
   h = h.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
   return h.replace(/\n/g, '<br>');
+}
+
+function resolvePath(path) {
+  if (!path) return '#';
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  if (path.startsWith('/')) return path;
+  return `/${path}`;
 }
 
 function applyPlaceholders(str, ctx) {
@@ -47,6 +56,66 @@ function mergePeopleOverride(people) {
   }
 }
 
+function buildServerStepFromNormalized(leader, n) {
+  const copies = [];
+  const email = String(n.emailAddress || leader.email || '').trim();
+  if (email) copies.push({ label: 'Email address', value: email });
+
+  const inc = n.incoming || {};
+  const out = n.outgoing || {};
+  const isEx = n.protocol === 'exchange' || n.source === 'eas';
+
+  if (isEx) {
+    if (inc.host) copies.push({ label: 'Server / host', value: inc.host });
+    if (inc.port) copies.push({ label: 'Port', value: String(inc.port) });
+  } else {
+    if (inc.host) copies.push({ label: 'Incoming (IMAP) server', value: inc.host });
+    if (inc.port) copies.push({ label: 'Incoming port', value: String(inc.port) });
+    copies.push({
+      label: 'Incoming security',
+      value: inc.ssl ? 'SSL/TLS on' : 'Off or STARTTLS — confirm with IT if unsure',
+    });
+    if (inc.username) copies.push({ label: 'Username (incoming)', value: inc.username });
+    if (out.host) copies.push({ label: 'Outgoing (SMTP) server', value: out.host });
+    if (out.port) copies.push({ label: 'SMTP port', value: String(out.port) });
+    copies.push({
+      label: 'Outgoing security',
+      value: out.ssl ? 'SSL/TLS on' : 'STARTTLS or app default',
+    });
+    if (out.username) copies.push({ label: 'Username (outgoing)', value: out.username });
+  }
+
+  return {
+    title: 'Server details (from your organization’s mail file)',
+    body: 'These **hostnames, ports, and security settings** were read from the same **published staff mail settings file** your organization uses for company mail. **Copy** each line into **Outlook** or **Samsung Email** when the app asks for manual or advanced setup. You do not need to install anything from that file on Android—only use the values below.',
+    tip: 'If this box is empty or values look wrong, the file may still be updating. Use **Guided setup** in the Document Depot or ask technical.',
+    copies,
+    image: '',
+  };
+}
+
+async function mergeMailFileStep(leader, person, steps) {
+  const mc = person.downloads?.find((d) => d.kind === 'mobileconfig');
+  if (!mc?.path) return steps;
+
+  const url = resolvePath(mc.path);
+  const result = await extractMailSettingsFromMobileConfigUrl(url);
+  if (!result.ok || !result.normalized) return steps;
+
+  let n = result.normalized;
+  if (!n.emailAddress && leader.email) n = { ...n, emailAddress: leader.email };
+
+  const inc = n.incoming || {};
+  const usedAuto =
+    Boolean(inc.host) || n.protocol === 'exchange' || n.source === 'eas';
+  if (!usedAuto) return steps;
+
+  const serverStep = buildServerStepFromNormalized(leader, n);
+  if (!serverStep.copies?.length) return steps;
+  if (!steps.length) return [serverStep];
+  return [steps[0], serverStep, ...steps.slice(1)];
+}
+
 function buildDefaultAndroidTutorial(leader) {
   const fullName = leader.name || 'Team member';
   const firstName = fullName.split(/\s+/)[0] || fullName;
@@ -57,14 +126,14 @@ function buildDefaultAndroidTutorial(leader) {
 
   return {
     title: P('Work email — Android, tablet, or desktop'),
-    subtitle: P('One screen at a time for {{fullName}}. Tap the card to flip for details.'),
+    subtitle: P('Everything for each step is on one screen. Use Next and Back.'),
     steps: [
       {
         title: P('Works on phone, tablet, or laptop'),
         body: P(
-          '{{firstName}}, use these cards in **full screen** on whatever device you’re holding. Each **Next** is a new step—same flow whether you’re on a Galaxy, Pixel, or a desktop browser.'
+          '{{firstName}}, use these steps in **full screen** on whatever device you’re using. Each **Next** moves to the next screen—whether you’re on a Galaxy, Pixel, or a desktop browser.'
         ),
-        tip: P('If text is small, pinch-zoom or rotate to landscape.'),
+        tip: P('If text feels small, pinch-zoom or rotate to landscape.'),
       },
       {
         title: P('Install Microsoft Outlook'),
@@ -130,6 +199,12 @@ function normalizeTutorial(raw, leader) {
     body: applyPlaceholders(s.body || '', ctx),
     tip: s.tip ? applyPlaceholders(s.tip, ctx) : '',
     image: s.image || '',
+    copies: Array.isArray(s.copies)
+      ? s.copies.map((c) => ({
+          label: applyPlaceholders(c.label || '', ctx),
+          value: applyPlaceholders(String(c.value ?? ''), ctx),
+        }))
+      : [],
   }));
   return { title, subtitle, steps };
 }
@@ -144,9 +219,10 @@ async function loadContext(leaderId) {
 
   if (!leader || !person) return null;
 
-  const tutorial = normalizeTutorial(person.androidFlipTutorial, leader);
+  let { title, subtitle, steps } = normalizeTutorial(person.androidFlipTutorial, leader);
+  steps = await mergeMailFileStep(leader, person, steps);
 
-  return { leader, tutorial };
+  return { leader, tutorial: { title, subtitle, steps } };
 }
 
 function renderDots(count, active) {
@@ -160,50 +236,63 @@ function renderDots(count, active) {
   document.getElementById('ft-step-num').textContent = `Step ${active + 1} of ${count}`;
 }
 
-let state = { index: 0, steps: [], flipped: false };
+function renderCopyBlocks(step, stepIndex) {
+  if (!step.copies?.length) return '';
+  return step.copies
+    .map((c, j) => {
+      const id = `ft-copy-${stepIndex}-${j}`;
+      return `
+      <div class="ft-copy-block">
+        <div class="ft-copy-label">${escapeHtml(c.label)}</div>
+        <div class="ft-copy-value" id="${id}-val">${escapeHtml(c.value)}</div>
+        <button type="button" class="ft-copy-btn" data-copy-target="${id}-val">Copy</button>
+      </div>`;
+    })
+    .join('');
+}
+
+let state = { index: 0, steps: [] };
 let touchStartX = null;
 
 function showStep() {
   const { steps, index } = state;
   const step = steps[index];
-  const inner = document.getElementById('ft-flip-inner');
-  inner.classList.remove('is-flipped');
-  state.flipped = false;
+  const panel = document.getElementById('ft-step-panel');
 
-  document.getElementById('ft-front-title').textContent = step.title;
-  document.getElementById('ft-back-body').innerHTML = formatBody(step.body);
-  const tipEl = document.getElementById('ft-back-tip');
-  if (step.tip) {
-    tipEl.hidden = false;
-    tipEl.innerHTML = formatBody(step.tip);
-  } else {
-    tipEl.hidden = true;
-  }
-  const imgEl = document.getElementById('ft-back-img');
-  if (step.image) {
-    imgEl.hidden = false;
-    imgEl.src = step.image.startsWith('/') ? step.image : `/${step.image}`;
-    imgEl.alt = '';
-  } else {
-    imgEl.hidden = true;
-    imgEl.removeAttribute('src');
-  }
+  panel.innerHTML = `
+    <div class="ft-card-kicker">This step</div>
+    <h2>${escapeHtml(step.title)}</h2>
+    <div class="ft-body">${formatBody(step.body)}</div>
+    ${step.image ? `<img class="ft-img" src="${escapeHtml(step.image.startsWith('/') ? step.image : `/${step.image}`)}" alt="">` : ''}
+    ${step.tip ? `<div class="ft-tip">${formatBody(step.tip)}</div>` : ''}
+    ${renderCopyBlocks(step, index)}
+  `;
+
+  panel.querySelectorAll('.ft-copy-btn').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const id = btn.getAttribute('data-copy-target');
+      const el = document.getElementById(id);
+      const text = el?.textContent || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.textContent = 'Copied';
+        btn.classList.add('is-done');
+      } catch {
+        btn.textContent = 'Select & copy';
+      }
+    });
+  });
 
   renderDots(steps.length, index);
   document.getElementById('ft-prev').disabled = index === 0;
-  document.getElementById('ft-next').textContent = index === steps.length - 1 ? 'Done' : 'Next screen';
-}
-
-function toggleFlip() {
-  const inner = document.getElementById('ft-flip-inner');
-  state.flipped = !state.flipped;
-  inner.classList.toggle('is-flipped', state.flipped);
+  document.getElementById('ft-next').textContent = index === steps.length - 1 ? 'Done' : 'Next';
 }
 
 function go(delta) {
-  const next = state.index + delta;
-  if (next < 0 || next >= state.steps.length) {
-    if (delta > 0 && state.index === state.steps.length - 1) {
+  const { steps, index } = state;
+  const next = index + delta;
+  if (next < 0 || next >= steps.length) {
+    if (delta > 0 && index === steps.length - 1) {
       window.location.href = 'documents.html';
     }
     return;
@@ -221,7 +310,7 @@ async function init() {
   if (!leaderId) {
     if (shell) shell.hidden = true;
     err.hidden = false;
-    err.textContent = 'Missing leader. Open this tutorial from the Document Depot (Android row).';
+    err.textContent = 'Missing leader. Open this guide from the Document Depot (Android section).';
     return;
   }
 
@@ -245,7 +334,7 @@ async function init() {
 
   document.getElementById('ft-page-title').textContent = ctx.tutorial.title;
   document.getElementById('ft-page-sub').textContent =
-    ctx.tutorial.subtitle || `${ctx.leader.name} · Android / Outlook path`;
+    ctx.tutorial.subtitle || `${ctx.leader.name} · Android / Outlook`;
 
   state.steps = ctx.tutorial.steps;
   state.index = 0;
@@ -253,21 +342,13 @@ async function init() {
 
   document.getElementById('ft-prev').addEventListener('click', () => go(-1));
   document.getElementById('ft-next').addEventListener('click', () => go(1));
-  document.getElementById('ft-flip-toggle').addEventListener('click', (e) => {
-    e.stopPropagation();
-    toggleFlip();
-  });
-  document.getElementById('ft-card').addEventListener('click', (e) => {
-    if (e.target.closest('button')) return;
-    toggleFlip();
-  });
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight') go(1);
     if (e.key === 'ArrowLeft') go(-1);
     if (e.key === ' ' || e.key === 'Enter') {
       e.preventDefault();
-      toggleFlip();
+      go(1);
     }
   });
 

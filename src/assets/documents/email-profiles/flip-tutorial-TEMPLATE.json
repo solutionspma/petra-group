@@ -1,16 +1,19 @@
 {
-  "title": "{{fullName}} — Android / Outlook (custom)",
-  "subtitle": "Your flip-card tutorial. Placeholders: {{fullName}} {{firstName}} {{email}} {{company}}",
+  "title": "{{fullName}} — Android mail (custom)",
+  "subtitle": "One screen per step. Placeholders: {{fullName}} {{firstName}} {{email}} {{company}}",
   "steps": [
     {
-      "title": "Screen 1 — short headline (front of card)",
-      "body": "Longer text on the back after you flip. Use **double asterisks** for bold.\n\nNew paragraph.",
-      "tip": "Optional yellow tip box on the back.",
-      "image": ""
+      "title": "Screen 1 — headline",
+      "body": "All instructions for this step go here. Use **double asterisks** for bold.\n\nSecond paragraph on the same card.",
+      "tip": "Optional tip box below the body.",
+      "image": "",
+      "copies": [
+        { "label": "Example value to copy", "value": "paste-me" }
+      ]
     },
     {
-      "title": "Screen 2 — next step",
-      "body": "Tell them exactly what to tap. Mention **{{email}}** if you added it to their leader record in documents.json.",
+      "title": "Screen 2",
+      "body": "Server values from the staff mail file are often **inserted automatically** after step 1 when the file is live on the site.",
       "tip": ""
     }
   ]

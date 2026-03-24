@@ -29,9 +29,10 @@ DOCUMENT DEPOT — EMAIL PROFILES (ADMIN)
    - The site reads the XML from the published mail settings file in the browser, extracts hosts/ports/SSL, and builds a copy/paste Android walkthrough.
    - Link: /portal/android-email-setup.html?leader=<leaderId> — also reachable as **Guided setup** next to each Android row in the depot.
 
-8. Flip-card screen tutorial (Android / laptop / phone browser)
+8. Android step guide (phone / tablet / laptop browser)
    - Public page: /portal/email-setup-cards.html?leader=<leaderId> (e.g. kevin-dickerson)
-   - Custom content: add "androidFlipTutorial" JSON next to each person in documents.json, or upload JSON via master Email profile admin.
+   - Each step is one full card (no flip). Server/host/port lines from the staff mail file are merged in when that file is readable.
+   - Custom narrative: add "androidFlipTutorial" JSON next to each person in documents.json, or upload JSON via master Email profile admin.
    - Template: flip-tutorial-TEMPLATE.json in this folder. Placeholders: {{fullName}} {{firstName}} {{email}} {{company}}
 
 Do not commit real passwords or secrets into the repository. Profiles may contain server hostnames but should not embed plaintext passwords in publicly hosted files unless your security policy allows it.

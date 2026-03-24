@@ -100,9 +100,9 @@ function renderLeaderSection(data) {
 
       const hasAndroidDoc = person.downloads.some((d) => d.kind !== 'mobileconfig');
       const flipTutorialRow = hasAndroidDoc
-        ? `<div class="depot-action-row depot-flip-row">
-            <span class="depot-action-label">Android — screen-by-screen</span>
-            <a class="depot-btn depot-btn-outline" href="email-setup-cards.html?leader=${encodeURIComponent(person.leaderId)}">Flip-card tutorial</a>
+        ? `<div class="depot-action-row depot-step-guide-row">
+            <span class="depot-action-label">Android — step-by-step</span>
+            <a class="depot-btn depot-btn-outline" href="email-setup-cards.html?leader=${encodeURIComponent(person.leaderId)}">Step guide</a>
           </div>`
         : '';
 
