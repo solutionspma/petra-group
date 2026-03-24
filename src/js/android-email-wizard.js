@@ -3,7 +3,10 @@
  * UI copy avoids referencing other platforms or installer file types.
  */
 
-import { extractMailSettingsFromMobileConfigUrl } from './plist-email-extract.js';
+import {
+  extractMailSettingsFromMobileConfigUrl,
+  normalizedFromMailSettingsJson,
+} from './plist-email-extract.js';
 
 const DATA_URL = new URL('../data/documents.json', import.meta.url);
 const EMAIL_OVERRIDE_KEY = 'tpg_email_profiles_override';
@@ -302,6 +305,18 @@ async function init() {
     const result = await extractMailSettingsFromMobileConfigUrl(url);
     if (result.ok && result.normalized) {
       normalized = result.normalized;
+      if (!normalized.emailAddress && leader.email) normalized.emailAddress = leader.email;
+      const inc = normalized.incoming || {};
+      usedAuto =
+        Boolean(inc.host) ||
+        normalized.protocol === 'exchange' ||
+        normalized.source === 'eas';
+    }
+  }
+  if (!usedAuto && person.mailSettingsForAndroid) {
+    const fromJson = normalizedFromMailSettingsJson(person.mailSettingsForAndroid);
+    if (fromJson) {
+      normalized = fromJson;
       if (!normalized.emailAddress && leader.email) normalized.emailAddress = leader.email;
       const inc = normalized.incoming || {};
       usedAuto =

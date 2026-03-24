@@ -158,6 +158,48 @@ function normalizePayload(payload) {
 }
 
 /**
+ * Build the same normalized shape as parse-from-plist, from documents.json
+ * `mailSettingsForAndroid` when the hosted .mobileconfig is PKCS#7-signed (GoDaddy etc.)
+ * and cannot be read in the browser.
+ */
+export function normalizedFromMailSettingsJson(spec) {
+  if (!spec || typeof spec !== 'object') return null;
+  const protocol = spec.protocol === 'exchange' ? 'exchange' : 'imap';
+  const emailAddress = String(spec.emailAddress || '').trim();
+  const inc = spec.incoming || {};
+  const out = spec.outgoing || {};
+  const incSsl = inc.ssl !== false && inc.ssl !== 0;
+  const outSsl = out.ssl !== false && out.ssl !== 0;
+  const incPort =
+    Number(inc.port) ||
+    (protocol === 'imap' ? (incSsl ? 993 : 143) : incSsl ? 995 : 110);
+  const outPort = Number(out.port) || (outSsl ? 465 : 587);
+
+  return {
+    source: 'documents-json',
+    protocol,
+    displayName: String(spec.displayName || '').trim(),
+    emailAddress,
+    incoming: {
+      host: String(inc.host || '').trim(),
+      port: incPort,
+      ssl: incSsl,
+      sslLabel: sslLabel(incSsl),
+      username: String(inc.username || emailAddress || '').trim(),
+      authentication: inc.authentication,
+    },
+    outgoing: {
+      host: String(out.host || '').trim(),
+      port: outPort,
+      ssl: outSsl,
+      sslLabel: sslLabel(outSsl),
+      username: String(out.username || emailAddress || '').trim(),
+      authentication: out.authentication,
+    },
+  };
+}
+
+/**
  * @param {string} url - absolute path to .mobileconfig on same origin
  * @returns {Promise<{ ok: boolean, normalized: object | null, reason?: string }>}
  */
@@ -170,6 +212,10 @@ export async function extractMailSettingsFromMobileConfigUrl(url) {
     const u8 = new Uint8Array(buf);
     if (u8.length >= 6 && u8[0] === 0x62 && u8[1] === 0x70 && u8[2] === 0x6c && u8[3] === 0x69 && u8[4] === 0x73 && u8[5] === 0x74) {
       return { ok: false, normalized: null, reason: 'binary-plist' };
+    }
+    // GoDaddy / Apple signed configuration profiles (DER PKCS#7), not XML plist
+    if (u8[0] === 0x30 && u8[1] === 0x82) {
+      return { ok: false, normalized: null, reason: 'signed-pkcs7' };
     }
     if (u8[0] !== 0x3c) {
       return { ok: false, normalized: null, reason: 'not-xml' };

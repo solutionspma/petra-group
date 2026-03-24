@@ -26,7 +26,9 @@ DOCUMENT DEPOT — EMAIL PROFILES (ADMIN)
    - Use the server-settings template and/or provider documentation; Outlook and Samsung Email support Exchange and IMAP using the published hostnames.
 
 7. Android guided setup (same mail settings file as source data)
-   - The site reads the XML from the published mail settings file in the browser, extracts hosts/ports/SSL, and builds a copy/paste Android walkthrough.
+   - When the hosted .mobileconfig is plain XML plist, the site reads it in the browser and builds copy/paste server steps.
+   - GoDaddy (and many providers) ship a **signed** profile (PKCS#7 binary). Browsers cannot unpack that, so server lines will not auto-load unless you add a fallback in documents.json:
+   - On the same object as "downloads" for that leader, add "mailSettingsForAndroid": { "protocol": "imap", "emailAddress": "user@domain.com", "incoming": { "host": "mail.example.com", "port": 993, "ssl": true, "username": "user@domain.com" }, "outgoing": { "host": "mail.example.com", "port": 465, "ssl": true, "username": "user@domain.com" } }
    - Link: /portal/android-email-setup.html?leader=<leaderId> — also reachable as **Guided setup** next to each Android row in the depot.
 
 8. Android step guide (phone / tablet / laptop browser)

@@ -3,7 +3,10 @@
  * Enriches with server values parsed from the same published mail settings file as the company mail slot.
  */
 
-import { extractMailSettingsFromMobileConfigUrl } from './plist-email-extract.js';
+import {
+  extractMailSettingsFromMobileConfigUrl,
+  normalizedFromMailSettingsJson,
+} from './plist-email-extract.js';
 
 const DATA_URL = new URL('../data/documents.json', import.meta.url);
 const EMAIL_OVERRIDE_KEY = 'tpg_email_profiles_override';
@@ -96,13 +99,18 @@ function buildServerStepFromNormalized(leader, n) {
 
 async function mergeMailFileStep(leader, person, steps) {
   const mc = person.downloads?.find((d) => d.kind === 'mobileconfig');
-  if (!mc?.path) return steps;
 
-  const url = resolvePath(mc.path);
-  const result = await extractMailSettingsFromMobileConfigUrl(url);
-  if (!result.ok || !result.normalized) return steps;
+  let n = null;
+  if (mc?.path) {
+    const url = resolvePath(mc.path);
+    const result = await extractMailSettingsFromMobileConfigUrl(url);
+    if (result.ok && result.normalized) n = result.normalized;
+  }
+  if (!n && person.mailSettingsForAndroid) {
+    n = normalizedFromMailSettingsJson(person.mailSettingsForAndroid);
+  }
+  if (!n) return steps;
 
-  let n = result.normalized;
   if (!n.emailAddress && leader.email) n = { ...n, emailAddress: leader.email };
 
   const inc = n.incoming || {};
