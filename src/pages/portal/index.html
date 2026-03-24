@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Home | The Petra Group</title>
+  <title>TPG web app — Portal | The Petra Group</title>
   <link rel="stylesheet" href="../../css/reset.css">
   <link rel="stylesheet" href="../../css/main.css">
 </head>
@@ -16,12 +16,13 @@
     </div>
     <button class="hamburger" id="hamburger-menu" onclick="toggleMenu()"><span></span><span></span><span></span></button>
     <ul class="nav-links" id="nav-links">
-      <li><a href="../../index.html" onclick="closeMenu()">Home</a></li>
-      <li><a href="../../about.html" onclick="closeMenu()">About</a></li>
-      <li><a href="../../team.html" onclick="closeMenu()">Team</a></li>
-      <li><a href="../../services.html" onclick="closeMenu()">Services</a></li>
-      <li><a href="../../carriers.html" onclick="closeMenu()">Carriers</a></li>
-      <li><a href="../../contact.html" onclick="closeMenu()">Contact</a></li>
+      <li><a href="../../index.html" onclick="closeMenu()">Main site</a></li>
+      <li><a href="index.html" onclick="closeMenu()">Portal home</a></li>
+      <li><a href="agent.html" onclick="closeMenu()">Agent</a></li>
+      <li><a href="broker.html" onclick="closeMenu()">Broker</a></li>
+      <li><a href="management.html" onclick="closeMenu()">Management</a></li>
+      <li><a href="training.html" onclick="closeMenu()">Training</a></li>
+      <li><a href="documents.html" onclick="closeMenu()">Document Depot</a></li>
     </ul>
   </nav>
 </header>
@@ -30,14 +31,14 @@ function toggleMenu() { const menu = document.getElementById('nav-links'); const
 function closeMenu() { const menu = document.getElementById('nav-links'); const hamburger = document.getElementById('hamburger-menu'); menu.classList.remove('active'); hamburger.classList.remove('active'); }
 </script>
 <main class="section" style="max-width: 1100px; margin: 40px auto;">
-  <h1>TPG Benefits Portal</h1>
-  <p>Choose your portal workspace.</p>
+  <h1>TPG Benefits web app</h1>
+  <p>Pick a workspace below. <strong>Document Depot</strong> is the shared library—carrier and compliance files, internal notes, and leadership email setup (iPhone profiles, Android guides)—built into the same portal session.</p>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:20px;">
     <a class="btn" href="agent.html">Agent Portal</a>
     <a class="btn" href="broker.html">Broker Portal</a>
     <a class="btn" href="management.html">Management Portal</a>
     <a class="btn" href="training.html">Agent/Broker Training</a>
-    <a class="btn" href="documents.html">Document Depot</a>
+    <a class="btn" href="documents.html" style="border:2px solid var(--gold);">Document Depot</a>
   </div>
   <div id="master-tools" style="display:none;margin-top:22px;padding:18px;background:#fff9e6;border-radius:8px;border-left:4px solid var(--gold);">
     <strong>Site owner</strong>

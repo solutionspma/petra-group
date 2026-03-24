@@ -426,6 +426,56 @@ a.depot-btn-outline {
   text-decoration: underline;
 }
 
+/* Hub strip — connect depot to rest of portal web app */
+.depot-app-hub {
+  margin-bottom: 36px;
+  padding: 22px 22px 24px;
+  background: linear-gradient(180deg, #fafafa 0%, #f0f0f0 100%);
+  border: 1px solid var(--light-gray);
+  border-radius: 10px;
+  border-left: 4px solid var(--gold);
+}
+
+.depot-app-hub-title {
+  font-size: 1.15rem;
+  margin: 0 0 10px;
+  color: #1a1a1a;
+  letter-spacing: 0.02em;
+}
+
+.depot-app-hub-lede {
+  margin: 0 0 18px;
+  max-width: 75ch;
+  color: #444;
+  line-height: 1.55;
+  font-size: 0.98rem;
+}
+
+.depot-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.depot-quick-card {
+  display: block;
+  text-align: center;
+  padding: 12px 14px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #1a1508;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.depot-quick-card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
 @media (max-width: 640px) {
   .depot-leader-head {
     flex-direction: column;

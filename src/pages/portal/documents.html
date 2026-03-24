@@ -23,7 +23,7 @@
       <li><a href="broker.html" onclick="closeMenu()">Broker</a></li>
       <li><a href="management.html" onclick="closeMenu()">Management</a></li>
       <li><a href="training.html" onclick="closeMenu()">Training</a></li>
-      <li><a href="documents.html" onclick="closeMenu()">Documents</a></li>
+      <li><a href="documents.html" onclick="closeMenu()">Document Depot</a></li>
     </ul>
   </nav>
 </header>
@@ -54,7 +54,23 @@ function closeMenu() {
   <div id="depot-preview-banner" hidden style="margin-bottom:16px;padding:12px 16px;background:#fff3cd;border:1px solid #ffc107;border-radius:8px;font-size:0.9rem;color:#664d03;"></div>
   <nav class="depot-portal-nav" aria-label="Portal">
     <a href="index.html">← Portal home</a>
+    <a href="agent.html">Agent</a>
+    <a href="broker.html">Broker</a>
+    <a href="management.html">Management</a>
+    <a href="training.html">Training</a>
   </nav>
+
+  <section class="depot-app-hub" aria-labelledby="depot-app-heading">
+    <h2 id="depot-app-heading" class="depot-app-hub-title">Built into the TPG web app</h2>
+    <p class="depot-app-hub-lede">You are already inside the signed-in portal. This page combines the <strong>document library</strong> (searchable categories, downloads) with <strong>team email setup</strong> (Install profile, Android guided steps, reference sheets). Future Supabase-backed editing will layer on top of this shell—today, publishing still flows through your build and deploy process.</p>
+    <div class="depot-quick-grid" role="navigation" aria-label="Other portal areas">
+      <a class="depot-quick-card" href="index.html">Portal home</a>
+      <a class="depot-quick-card" href="agent.html">Agent</a>
+      <a class="depot-quick-card" href="broker.html">Broker</a>
+      <a class="depot-quick-card" href="management.html">Management</a>
+      <a class="depot-quick-card" href="training.html">Training</a>
+    </div>
+  </section>
 
   <section id="depot-leaders-section" aria-labelledby="depot-leaders-heading">
     <h2 class="depot-section-title" id="depot-leaders-heading">Your email setup</h2>
