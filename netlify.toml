@@ -5,6 +5,10 @@
 [build.environment]
   NODE_VERSION = "22"
 
+[functions]
+  directory = "netlify/functions"
+
+# SPA fallback — Netlify still serves /.netlify/functions/* first; this documents intent.
 [[redirects]]
   from = "/*"
   to = "/index.html"

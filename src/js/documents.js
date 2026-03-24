@@ -30,6 +30,31 @@ function applyLocalEmailOverride(data) {
   }
 }
 
+/**
+ * Netlify (or compatible): merge runtime env-driven iOS "live" flags so Install shows without editing documents.json.
+ */
+async function applyRemoteIosLiveFlags(data) {
+  try {
+    const res = await fetch('/.netlify/functions/profile-flags', { credentials: 'omit' });
+    if (!res.ok) return;
+    const payload = await res.json();
+    const iosLive = payload?.iosLive;
+    if (!iosLive || typeof iosLive !== 'object') return;
+
+    data.emailProfiles.people = data.emailProfiles.people.map((p) => {
+      if (!iosLive[p.leaderId]) return p;
+      return {
+        ...p,
+        downloads: p.downloads.map((d) =>
+          d.kind === 'mobileconfig' ? { ...d, status: 'live' } : d
+        ),
+      };
+    });
+  } catch {
+    /* offline, wrong host, or functions not deployed */
+  }
+}
+
 function escapeHtml(s) {
   const div = document.createElement('div');
   div.textContent = s;
@@ -271,6 +296,7 @@ async function init() {
   }
 
   applyLocalEmailOverride(data);
+  await applyRemoteIosLiveFlags(data);
 
   const metaTitle = document.getElementById('depot-meta-title');
   const metaSub = document.getElementById('depot-meta-sub');

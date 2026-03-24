@@ -1,0 +1,31 @@
+REMOTE “INSTALL PROFILE” VISIBILITY (NO DATABASE)
+
+The Document Depot reads documents.json from the repo. To show the green **Install profile** button
+for someone before you change JSON and redeploy, use **Netlify environment variables** (free tier).
+
+After you push the site with the `netlify/functions/profile-flags` function deployed:
+
+1. Netlify → your site → **Site configuration** → **Environment variables**
+
+2. Choose ONE approach:
+
+   A) Single JSON (easiest for several people at once)
+      Name:  EMAIL_PROFILE_IOS_LIVE_JSON
+      Value: {"kevin-dickerson":true}
+      (Add more ids: {"kevin-dickerson":true,"troy-dixon":true})
+
+   B) One variable per leader (suffix = leader id with UNDERSCORES instead of hyphens)
+      Name:  EMAIL_IOS_LIVE_KEVIN_DICKERSON
+      Value: 1
+      (Same as leader id "kevin-dickerson" in documents.json)
+
+   Truthy values: 1, true, yes, live
+
+3. Save. Functions usually pick up new env values on the next request (no full site rebuild required).
+
+4. The actual .mobileconfig file must still exist at the path in documents.json (e.g.
+   /assets/documents/email-profiles/kevin-dickerson.mobileconfig) or the button will appear but the link 404s.
+
+5. When you later set status to "live" in documents.json and deploy, you can remove the env override.
+
+Local / non-Netlify hosts: this endpoint is not available; use documents.json status only or Supabase later.
