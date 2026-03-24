@@ -1,0 +1,134 @@
+{
+  "meta": {
+    "title": "Document Depot",
+    "subtitle": "Central library for carriers, compliance, marketing, and leadership resources.",
+    "version": 1,
+    "updated": "2026-03-24"
+  },
+  "leaders": [
+    {
+      "id": "troy-dixon",
+      "name": "Troy Dixon",
+      "title": "Founder",
+      "teamImage": "tpgtroydixon.png"
+    },
+    {
+      "id": "kevin-dickerson",
+      "name": "Kevin Dickerson",
+      "title": "VP of Agency Development",
+      "teamImage": "tpgkevindickerson.png"
+    },
+    {
+      "id": "debbie-kaglear",
+      "name": "Debbie Kaglear",
+      "title": "VP of Operations",
+      "teamImage": "tpgdebbiekaglear.png"
+    }
+  ],
+  "emailProfiles": {
+    "title": "Leadership email setup",
+    "description": "Each leader has an iOS configuration profile (from GoDaddy or Microsoft 365) when available, plus server details for Android Samsung Email, Outlook, or other clients. Replace pending profiles by uploading the .mobileconfig file from your email host and setting status to \"live\" in documents.json.",
+    "iphoneHelp": "On iPhone or iPad: tap your profile link → Allow → open Settings → Profile Downloaded → Install. You may need your device passcode. There is no safe generic script that injects credentials; the profile file from your provider is the supported method.",
+    "androidHelp": "Android (e.g. Galaxy S24) does not use .mobileconfig. Use Samsung Email or Outlook with the server settings sheet, or follow your provider’s Android steps. Exchange accounts often auto-discover when you enter email and password in Outlook.",
+    "people": [
+      {
+        "leaderId": "troy-dixon",
+        "downloads": [
+          {
+            "id": "troy-ios",
+            "label": "iPhone / iPad — email profile",
+            "kind": "mobileconfig",
+            "path": "/assets/documents/email-profiles/troy-dixon.mobileconfig",
+            "status": "pending"
+          },
+          {
+            "id": "troy-manual",
+            "label": "Android, Outlook, and manual setup",
+            "kind": "txt",
+            "path": "/assets/documents/email-profiles/server-settings-template.txt",
+            "status": "live"
+          }
+        ]
+      },
+      {
+        "leaderId": "kevin-dickerson",
+        "downloads": [
+          {
+            "id": "kevin-ios",
+            "label": "iPhone / iPad — email profile",
+            "kind": "mobileconfig",
+            "path": "/assets/documents/email-profiles/kevin-dickerson.mobileconfig",
+            "status": "pending"
+          },
+          {
+            "id": "kevin-manual",
+            "label": "Android, Outlook, and manual setup",
+            "kind": "txt",
+            "path": "/assets/documents/email-profiles/server-settings-template.txt",
+            "status": "live"
+          }
+        ]
+      },
+      {
+        "leaderId": "debbie-kaglear",
+        "downloads": [
+          {
+            "id": "debbie-ios",
+            "label": "iPhone / iPad — email profile (optional)",
+            "kind": "mobileconfig",
+            "path": "/assets/documents/email-profiles/debbie-kaglear.mobileconfig",
+            "status": "pending"
+          },
+          {
+            "id": "debbie-manual",
+            "label": "Android (Samsung) — server settings & steps",
+            "kind": "txt",
+            "path": "/assets/documents/email-profiles/android-samsung-email-steps.txt",
+            "status": "live"
+          }
+        ]
+      }
+    ]
+  },
+  "categories": [
+    { "id": "all", "name": "All documents", "description": "Everything in the depot." },
+    { "id": "email-profiles", "name": "Email profiles", "description": "iOS .mobileconfig files and server settings for other devices." },
+    { "id": "carrier-forms", "name": "Carrier forms", "description": "Carrier paperwork and transmittals." },
+    { "id": "product-guides", "name": "Product guides", "description": "Plan summaries and product reference." },
+    { "id": "enrollment-forms", "name": "Enrollment forms", "description": "Enrollment packets and worksheets." },
+    { "id": "compliance", "name": "Compliance documents", "description": "Notices, SPDs, and regulatory items." },
+    { "id": "marketing", "name": "Marketing materials", "description": "Collateral and campaigns." },
+    { "id": "training", "name": "Training materials", "description": "Videos, decks, and job aids." },
+    { "id": "announcements", "name": "Internal announcements", "description": "Memos and internal comms." },
+    { "id": "broker-kits", "name": "Broker kits", "description": "Broker-facing toolkits." },
+    { "id": "agent-kits", "name": "Agent kits", "description": "Agent-facing toolkits." }
+  ],
+  "documents": [
+    {
+      "id": "ep-readme",
+      "categoryId": "email-profiles",
+      "title": "How to publish GoDaddy / Microsoft email profiles",
+      "description": "Administrator checklist for adding .mobileconfig files to this site.",
+      "version": "1.0",
+      "updated": "2026-03-24",
+      "tags": ["admin", "email", "ios"],
+      "files": [
+        {
+          "label": "Admin instructions",
+          "path": "/assets/documents/email-profiles/ADMIN-ADD-PROFILES.txt",
+          "kind": "txt"
+        }
+      ]
+    },
+    {
+      "id": "sample-carrier",
+      "categoryId": "carrier-forms",
+      "title": "Sample carrier form (placeholder)",
+      "description": "Replace with real documents in dist/assets/documents/ and list them here.",
+      "version": "0.1",
+      "updated": "2026-03-24",
+      "tags": ["placeholder"],
+      "files": []
+    }
+  ]
+}

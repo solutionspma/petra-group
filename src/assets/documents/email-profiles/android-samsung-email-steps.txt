@@ -1,0 +1,19 @@
+SAMSUNG GALAXY (e.g. S24) — ADD WORK EMAIL
+
+These steps are typical for Microsoft 365 / Exchange. If you use plain IMAP from GoDaddy, choose “Other” or IMAP and enter the server names from your provider.
+
+Option A — Outlook (recommended for M365)
+1. Install Microsoft Outlook from the Play Store if needed.
+2. Open Outlook → Add account → enter your work email.
+3. Sign in with your password (and MFA if enabled). Autodiscover often fills in server settings.
+
+Option B — Samsung Email
+1. Open Settings → Accounts and backup → Accounts → Add account.
+2. Choose “Exchange” or “Microsoft Exchange ActiveSync” (wording varies by Android version).
+3. Enter email and password; if manual setup is required, use the server hostname from server-settings-template.txt (e.g. outlook.office365.com) and enable SSL.
+
+Security
+- Use official apps from the Play Store.
+- After setup, enable biometric lock on the phone if company policy requires it.
+
+If setup fails, confirm with IT: correct email domain, MFA method, and whether “modern authentication” is required.

@@ -1,0 +1,22 @@
+EMAIL SERVER SETTINGS (fill in from GoDaddy or Microsoft 365)
+
+Account type: Microsoft Exchange / Office 365  OR  IMAP (circle one)
+
+--- If Microsoft 365 / Exchange ---
+Email address:     _________________________________
+Domain\username:   _________________________________   (if required)
+Password:          (enter only on device — do not store here)
+
+Exchange server:   outlook.office365.com   (confirm in admin portal)
+Port (SSL):        443
+Security:          SSL/TLS
+
+--- If IMAP (example — verify in GoDaddy) ---
+Incoming server:   _________________________________
+IMAP port (SSL):   993
+Outgoing server:   _________________________________
+SMTP port (SSL):   465 or 587 (STARTTLS)
+
+Notes:
+- Replace placeholders with values from your GoDaddy Email Control Center or Microsoft 365 admin.
+- For Android Galaxy devices, Samsung Email and Outlook both support Exchange; use “Office 365” or “Exchange” when prompted if you use M365.

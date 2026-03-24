@@ -1,0 +1,382 @@
+/* Document Depot — portal */
+
+.depot-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+}
+
+.depot-hero {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #111 100%);
+  color: var(--white);
+  padding: 48px 24px 56px;
+  margin-bottom: 32px;
+  border-bottom: 3px solid var(--gold);
+}
+
+.depot-hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.depot-hero h1 {
+  font-size: clamp(1.75rem, 4vw, 2.35rem);
+  margin-bottom: 12px;
+  letter-spacing: 0.02em;
+}
+
+.depot-hero p {
+  opacity: 0.88;
+  max-width: 52ch;
+  font-size: 1.05rem;
+}
+
+.depot-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-end;
+  margin-bottom: 28px;
+  padding: 20px;
+  background: var(--gray);
+  border-radius: 8px;
+  border: 1px solid var(--light-gray);
+}
+
+.depot-search-wrap {
+  flex: 1 1 220px;
+  min-width: 200px;
+}
+
+.depot-search-wrap label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: #444;
+}
+
+.depot-search {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.depot-search:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.depot-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.depot-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid #ccc;
+  background: var(--white);
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.depot-chip:hover {
+  border-color: var(--gold);
+  color: #6b5a1e;
+}
+
+.depot-chip[aria-pressed="true"] {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #1a1508;
+}
+
+.depot-section-title {
+  font-size: 1.35rem;
+  margin: 40px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--gold);
+}
+
+.depot-leaders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.depot-leader-card {
+  background: var(--white);
+  border: 1px solid var(--light-gray);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+}
+
+.depot-leader-head {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  background: linear-gradient(180deg, #fafafa 0%, var(--white) 100%);
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.depot-leader-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--gold);
+  flex-shrink: 0;
+  background: var(--light-gray);
+}
+
+.depot-leader-meta h3 {
+  font-size: 1.15rem;
+  margin-bottom: 4px;
+}
+
+.depot-leader-meta span {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.depot-leader-actions {
+  padding: 16px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.depot-action-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.depot-action-label {
+  font-size: 0.9rem;
+  font-weight: bold;
+  flex: 1 1 160px;
+}
+
+.depot-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.depot-btn:active {
+  transform: scale(0.98);
+}
+
+.depot-btn-primary {
+  background: var(--gold);
+  color: #1a1508;
+}
+
+.depot-btn-primary:hover {
+  box-shadow: 0 4px 16px rgba(201, 162, 63, 0.45);
+}
+
+.depot-btn-secondary {
+  background: #1a1a1a;
+  color: var(--white);
+}
+
+.depot-btn-secondary:hover {
+  background: #333;
+}
+
+.depot-btn:disabled,
+.depot-btn[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.depot-btn-primary:disabled {
+  background: #a89868;
+  color: #3d3620;
+}
+
+.depot-badge {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.depot-badge-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.depot-badge-live {
+  background: #d4edda;
+  color: #155724;
+}
+
+.depot-help {
+  margin-top: 24px;
+  padding: 16px 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid var(--light-gray);
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.depot-help summary {
+  cursor: pointer;
+  font-weight: bold;
+  color: #222;
+}
+
+.depot-help details[open] summary {
+  margin-bottom: 10px;
+}
+
+.depot-doc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.depot-doc-card {
+  border: 1px solid var(--light-gray);
+  border-radius: 12px;
+  padding: 20px;
+  background: var(--white);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.depot-doc-card h3 {
+  font-size: 1.1rem;
+  line-height: 1.35;
+}
+
+.depot-doc-meta {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.depot-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.depot-tag {
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  background: var(--gray);
+  border-radius: 4px;
+  color: #555;
+}
+
+.depot-empty {
+  text-align: center;
+  padding: 48px 24px;
+  color: #777;
+  background: var(--gray);
+  border-radius: 8px;
+  border: 2px dashed var(--light-gray);
+}
+
+.depot-admin {
+  margin-top: 48px;
+  padding: 24px;
+  border-radius: 12px;
+  border: 2px dashed #bbb;
+  background: #fafafa;
+}
+
+.depot-admin h2 {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+}
+
+.depot-admin p {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+.depot-file-input {
+  margin-bottom: 16px;
+}
+
+.depot-snippet {
+  width: 100%;
+  min-height: 120px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.8rem;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #fff;
+  resize: vertical;
+}
+
+.depot-portal-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  margin-bottom: 24px;
+  padding: 0 4px;
+}
+
+.depot-portal-nav a {
+  font-weight: bold;
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.depot-portal-nav a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .depot-leader-head {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .depot-action-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .depot-btn {
+    width: 100%;
+  }
+}

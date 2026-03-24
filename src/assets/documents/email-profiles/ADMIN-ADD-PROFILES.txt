@@ -1,0 +1,28 @@
+DOCUMENT DEPOT — EMAIL PROFILES (ADMIN)
+
+1. Obtain the configuration profile
+   - GoDaddy Email / Microsoft 365: use the provider’s “mobile” or “iPhone” setup flow and download the .mobileconfig file (or export from your admin console if applicable).
+
+2. Add the file to the site
+   - Place the file under: src/assets/documents/email-profiles/
+   - Use a clear name, e.g. troy-dixon.mobileconfig
+
+3. Update data
+   - Open src/data/documents.json
+   - Under emailProfiles → people → find the leader
+   - Set the matching download entry "status" to "live"
+   - Ensure "path" matches the file path from the site root (e.g. /assets/documents/email-profiles/troy-dixon.mobileconfig)
+
+4. Build and deploy
+   - Run: npm run build
+   - Deploy the dist folder (e.g. push to Netlify).
+
+5. iPhone behavior
+   - Users open the Document Depot on Safari, tap the profile link, allow the download, then Settings → General → VPN & Device Management (or Profile) → Install.
+   - Netlify should serve .mobileconfig with Content-Type application/x-apple-aspen-config (configured in netlify.toml).
+
+6. Android (Samsung, etc.)
+   - There is no equivalent one-tap profile for consumer email in most cases.
+   - Use the server-settings template and/or provider documentation; Outlook and Samsung Email support Exchange and IMAP using the published hostnames.
+
+Do not commit real passwords or secrets into the repository. Profiles may contain server hostnames but should not embed plaintext passwords in publicly hosted files unless your security policy allows it.
