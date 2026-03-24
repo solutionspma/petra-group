@@ -5,6 +5,31 @@ for someone before you change JSON and redeploy, use **Netlify environment varia
 
 After you push the site with the `netlify/functions/profile-flags` function deployed:
 
+--- Option 1: Netlify CLI (from your machine) ---
+
+Prereqs: install the CLI once (`npm i -g netlify-cli`) or use `npx netlify`. From the **petra-group** repo root:
+
+  netlify login              # once per machine
+  netlify link               # once: pick this site (creates .netlify/state.json; gitignored)
+
+Set Kevin’s iOS row to “live” in **production** (default `env:set` applies to all scopes, including functions):
+
+  netlify env:set EMAIL_IOS_LIVE_KEVIN_DICKERSON 1 --context production
+
+Or one JSON blob (zsh/bash; escape inner double-quotes):
+
+  netlify env:set EMAIL_PROFILE_IOS_LIVE_JSON "{\"kevin-dickerson\":true}" --context production
+
+Useful:
+
+  netlify env:list
+  netlify env:unset EMAIL_IOS_LIVE_KEVIN_DICKERSON --context production
+
+CI / scripts: create a personal access token in Netlify (User settings → Applications → Personal access tokens),
+export `NETLIFY_AUTH_TOKEN`, then run the same `netlify env:set` commands (no browser login).
+
+--- Option 2: Netlify UI ---
+
 1. Netlify → your site → **Site configuration** → **Environment variables**
 
 2. Choose ONE approach:
@@ -21,7 +46,7 @@ After you push the site with the `netlify/functions/profile-flags` function depl
 
    Truthy values: 1, true, yes, live
 
-3. Save. Functions usually pick up new env values on the next request (no full site rebuild required).
+3. Save (or after CLI `env:set`). Functions usually pick up new env values on the next request (no full site rebuild required).
 
 4. The actual .mobileconfig file must still exist at the path in documents.json (e.g.
    /assets/documents/email-profiles/kevin-dickerson.mobileconfig) or the button will appear but the link 404s.
