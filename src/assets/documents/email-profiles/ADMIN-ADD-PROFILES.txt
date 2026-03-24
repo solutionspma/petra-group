@@ -5,7 +5,8 @@ DOCUMENT DEPOT — EMAIL PROFILES (ADMIN)
 
 2. Add the file to the site
    - Place the file under: src/assets/documents/email-profiles/
-   - Use a clear name, e.g. troy-dixon.mobileconfig
+   - Name must match documents.json path, e.g. troy-dixon.mobileconfig, harry-christophe.mobileconfig, deirdre-carter.mobileconfig
+   - Rename GoDaddy’s long download name to that exact filename before committing.
 
 3. Update data
    - Open src/data/documents.json
@@ -16,6 +17,7 @@ DOCUMENT DEPOT — EMAIL PROFILES (ADMIN)
 4. Build and deploy
    - Run: npm run build
    - Deploy the dist folder (e.g. push to Netlify).
+   - Commit BOTH the updated documents.json AND the new .mobileconfig binaries (git add). If the file is missing on the host, the Install link will fail — it is not enough to change JSON alone.
 
 5. iPhone behavior
    - Users open the Document Depot on Safari, tap the profile link, allow the download, then Settings → General → VPN & Device Management (or Profile) → Install.

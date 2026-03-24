@@ -104,10 +104,11 @@ function renderForm(data, mount) {
     .map((person) => {
       const L = leaderMap[person.leaderId];
       const name = L ? `${L.name}` : person.leaderId;
+      const lid = person.leaderId;
       return `
-        <div class="admin-ep-card" data-leader-id="${person.leaderId}">
+        <div class="admin-ep-card" data-leader-id="${lid}">
           <h3>${name}</h3>
-          <p class="admin-ep-meta">${L?.title || ''}</p>
+          <p class="admin-ep-meta">${L?.title || ''}<br><span class="admin-ep-filename">iOS deploy name: <code>src/assets/documents/email-profiles/${lid}.mobileconfig</code> (exact spelling)</span></p>
           <label>iPhone / iPad profile (.mobileconfig)</label>
           <input type="file" data-slot="ios" accept=".mobileconfig,application/x-apple-aspen-config">
           <label>Android / manual doc (optional — replaces second row file on deploy)</label>

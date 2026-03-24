@@ -8,11 +8,8 @@
 [functions]
   directory = "netlify/functions"
 
-# SPA fallback — Netlify still serves /.netlify/functions/* first; this documents intent.
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# No catch-all SPA rewrite: this site is static HTML pages. A /* → index.html rule caused
+# missing files (e.g. not-yet-deployed .mobileconfig) to return HTML, so iOS showed a broken profile.
 
 [dev]
   command = "node build.js && python3 -m http.server 8000 --directory dist"

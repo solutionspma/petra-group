@@ -111,9 +111,12 @@ function renderLeaderSection(data) {
 
           const btnClass = 'depot-btn depot-btn-primary';
           const label = canUse ? 'Install profile' : 'Profile not published yet';
+          const missingTip = canUse
+            ? ''
+            : ` title="Add this exact file to the site and set status to live in documents.json, then deploy: ${d.path.replace(/^\//, '')}"`;
           const control = canUse
             ? `<a class="${btnClass}" href="${escapeHtml(href)}" target="_blank" rel="noopener">${escapeHtml(label)}</a>`
-            : `<button type="button" class="${btnClass}" disabled>${escapeHtml(label)}</button>`;
+            : `<button type="button" class="${btnClass}" disabled${missingTip}>${escapeHtml(label)}</button>`;
 
           return `
             <div class="depot-action-row">
