@@ -1,5 +1,12 @@
 REMOTE “INSTALL PROFILE” VISIBILITY (NO DATABASE)
 
+READ FIRST — WHAT ENV VARS DO *NOT* DO
+They do not upload files and do not move anything from your computer to Kevin’s. The .mobileconfig
+must already be on the live site: add it under src/assets/documents/email-profiles/, commit, push,
+let Netlify build. Everyone (including Kevin) then downloads the same public URL. Env vars only
+flip the Install button from “not published” to “live” in the browser when you refuse to edit
+documents.json for that.
+
 The Document Depot reads documents.json from the repo. To show the green **Install profile** button
 for someone before you change JSON and redeploy, use **Netlify environment variables** (free tier).
 
