@@ -1,0 +1,3 @@
+DOCUMENT DEPOT — FUTURE COLLABORATION (DRAFT NOTE)
+
+When the Document Depot is connected to Supabase, the goal is to support the same kind of experience many teams already know from Microsoft OneDrive: multiple people can view and update materials at the same time without stepping on each other’s work, with changes syncing reliably in the background. Row Level Security (RLS) in Postgres will enforce who can read or edit which rows, so access stays tied to roles and policies instead of a single shared password. Until that backend is wired in, the depot remains a static site updated through the normal build-and-deploy path.

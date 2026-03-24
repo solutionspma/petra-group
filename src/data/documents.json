@@ -247,6 +247,22 @@
       "updated": "2026-03-24",
       "tags": ["placeholder"],
       "files": []
+    },
+    {
+      "id": "depot-collaboration-supabase",
+      "categoryId": "announcements",
+      "title": "Document Depot — collaboration & Supabase (roadmap)",
+      "description": "How simultaneous updates (OneDrive-style) and Row Level Security fit in once Supabase powers the depot.",
+      "version": "1.0",
+      "updated": "2026-03-24",
+      "tags": ["roadmap", "supabase", "rls", "internal"],
+      "files": [
+        {
+          "label": "Read the note",
+          "path": "/assets/documents/document-depot-collaboration-roadmap.txt",
+          "kind": "txt"
+        }
+      ]
     }
   ]
 }
