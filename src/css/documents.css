@@ -221,6 +221,27 @@
   background: #333;
 }
 
+.depot-btn-outline {
+  background: transparent;
+  color: var(--gold);
+  border: 2px solid var(--gold);
+}
+
+.depot-btn-outline:hover {
+  background: rgba(201, 162, 63, 0.12);
+}
+
+a.depot-btn-outline {
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.depot-flip-row {
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--light-gray);
+}
+
 .depot-btn:disabled,
 .depot-btn[aria-disabled="true"] {
   opacity: 0.45;

@@ -13,7 +13,11 @@ function applyLocalEmailOverride(data) {
     if (!o?.people || !Array.isArray(o.people)) return;
     data.emailProfiles.people = data.emailProfiles.people.map((p) => {
       const patch = o.people.find((x) => x.leaderId === p.leaderId);
-      return patch?.downloads ? { ...p, downloads: patch.downloads } : p;
+      if (!patch) return p;
+      const n = { ...p };
+      if (patch.downloads) n.downloads = patch.downloads;
+      if (patch.androidFlipTutorial !== undefined) n.androidFlipTutorial = patch.androidFlipTutorial;
+      return n;
     });
     const banner = document.getElementById('depot-preview-banner');
     if (banner) {
@@ -87,6 +91,14 @@ function renderLeaderSection(data) {
         })
         .join('');
 
+      const hasAndroidDoc = person.downloads.some((d) => d.kind !== 'mobileconfig');
+      const flipTutorialRow = hasAndroidDoc
+        ? `<div class="depot-action-row depot-flip-row">
+            <span class="depot-action-label">Android — screen-by-screen</span>
+            <a class="depot-btn depot-btn-outline" href="email-setup-cards.html?leader=${encodeURIComponent(person.leaderId)}">Flip-card tutorial</a>
+          </div>`
+        : '';
+
       const avatarHtml = imgSrc
         ? `<img class="depot-leader-avatar" src="${escapeHtml(imgSrc)}" alt="" width="72" height="72" loading="lazy" onerror="this.style.display='none'">`
         : `<div class="depot-leader-avatar" aria-hidden="true"></div>`;
@@ -107,6 +119,7 @@ function renderLeaderSection(data) {
           </div>
           <div class="depot-leader-actions">
             ${downloadsHtml}
+            ${flipTutorialRow}
           </div>
         </article>`;
     })

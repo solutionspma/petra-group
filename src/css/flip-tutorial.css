@@ -1,0 +1,282 @@
+/* Index-card style flip tutorial — phone / tablet / desktop */
+
+.ft-page {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(165deg, #2a2419 0%, #1a1610 45%, #0f0d0a 100%);
+  color: #1a1610;
+}
+
+.ft-top {
+  flex-shrink: 0;
+  padding: 16px 20px;
+  background: rgba(0, 0, 0, 0.35);
+  border-bottom: 2px solid var(--gold, #c9a23f);
+}
+
+.ft-top a {
+  color: var(--gold, #c9a23f);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.ft-top a:hover {
+  text-decoration: underline;
+}
+
+.ft-title-block {
+  margin-top: 10px;
+}
+
+.ft-title-block h1 {
+  color: #fff;
+  font-size: clamp(1.15rem, 3.5vw, 1.45rem);
+  letter-spacing: 0.02em;
+}
+
+.ft-title-block p {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.88rem;
+  margin-top: 6px;
+  max-width: 40ch;
+}
+
+.ft-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 16px 100px;
+  touch-action: pan-y;
+}
+
+.ft-progress {
+  width: 100%;
+  max-width: 440px;
+  margin-bottom: 18px;
+}
+
+.ft-progress-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ft-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(201, 162, 63, 0.5);
+}
+
+.ft-dot.is-active {
+  background: var(--gold, #c9a23f);
+  transform: scale(1.15);
+}
+
+.ft-step-label {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.8rem;
+  margin-top: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Index card */
+.flip-card {
+  width: 100%;
+  max-width: 440px;
+  perspective: 1200px;
+  cursor: pointer;
+}
+
+.flip-card-inner {
+  position: relative;
+  min-height: min(52dvh, 420px);
+  transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.flip-card-inner.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  padding: 28px 24px 24px;
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(0, 0, 0, 0.06);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-sizing: border-box;
+}
+
+.flip-card-front {
+  display: flex;
+  flex-direction: column;
+  background:
+    linear-gradient(90deg, #c62828 0%, #c62828 5px, transparent 5px),
+    repeating-linear-gradient(
+      transparent,
+      transparent 27px,
+      rgba(180, 170, 140, 0.35) 27px,
+      rgba(180, 170, 140, 0.35) 28px
+    ),
+    #faf6ed;
+  border: 1px solid #c4b896;
+}
+
+.flip-card-back {
+  background:
+    repeating-linear-gradient(
+      transparent,
+      transparent 27px,
+      rgba(180, 170, 140, 0.35) 27px,
+      rgba(180, 170, 140, 0.35) 28px
+    ),
+    #f7f2e8;
+  border: 1px solid #b0a080;
+  transform: rotateY(180deg);
+  overflow-y: auto;
+}
+
+.ft-card-kicker {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #6b5a3a;
+  margin-bottom: 12px;
+}
+
+.ft-card-front h2 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.35rem, 4vw, 1.75rem);
+  line-height: 1.25;
+  color: #1a1610;
+  margin-bottom: 14px;
+}
+
+.ft-card-front .ft-tap-hint {
+  margin-top: auto;
+  padding-top: 20px;
+  font-size: 0.85rem;
+  color: #5c4d32;
+  font-weight: bold;
+}
+
+.ft-card-back .ft-body {
+  font-size: 1rem;
+  line-height: 1.55;
+  color: #2a2419;
+}
+
+.ft-card-back .ft-body strong {
+  color: #1a1208;
+}
+
+.ft-card-back .ft-tip {
+  margin-top: 16px;
+  padding: 12px 14px;
+  background: rgba(201, 162, 63, 0.2);
+  border-left: 4px solid var(--gold, #c9a23f);
+  font-size: 0.9rem;
+  border-radius: 0 8px 8px 0;
+}
+
+.ft-card-back .ft-img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin: 12px 0;
+  border: 1px solid #c4b896;
+}
+
+.ft-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  padding: 16px 20px calc(16px + env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.85) 30%);
+}
+
+.ft-nav button {
+  flex: 1;
+  max-width: 200px;
+  padding: 14px 18px;
+  font-weight: bold;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.ft-nav .ft-btn-back {
+  background: #3d3830;
+  color: #fff;
+}
+
+.ft-nav .ft-btn-next {
+  background: var(--gold, #c9a23f);
+  color: #1a1508;
+}
+
+.ft-nav button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.ft-swipe-hint {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.78rem;
+  margin-top: 12px;
+}
+
+.ft-error {
+  text-align: center;
+  padding: 24px 20px;
+  margin: 20px auto;
+  max-width: 420px;
+  background: #fff3cd;
+  color: #664d03;
+  border: 1px solid #ffc107;
+  border-radius: 10px;
+}
+
+.ft-flip-btn {
+  margin-top: 16px;
+  padding: 10px 16px;
+  font-weight: bold;
+  background: #1a1610;
+  color: #faf6ed;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.ft-flip-btn:hover {
+  background: #2a2419;
+}
+
+@media (min-width: 900px) {
+  .ft-main {
+    padding-bottom: 120px;
+  }
+
+  .flip-card-inner {
+    min-height: 440px;
+  }
+}

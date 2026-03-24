@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Email setup — flip cards | The Petra Group</title>
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/flip-tutorial.css">
+</head>
+<body class="ft-page">
+  <p id="ft-error" class="ft-error" hidden></p>
+
+  <div id="ft-shell">
+  <header class="ft-top">
+    <a href="documents.html">← Document Depot</a>
+    <div class="ft-title-block">
+      <h1 id="ft-page-title">Email setup</h1>
+      <p id="ft-page-sub">Loading…</p>
+    </div>
+  </header>
+
+  <main class="ft-main" id="ft-main">
+    <div class="ft-progress">
+      <div class="ft-progress-dots" id="ft-dots" aria-hidden="true"></div>
+      <p class="ft-step-label" id="ft-step-num">Step 1</p>
+    </div>
+
+    <div class="flip-card" id="ft-card" role="button" tabindex="0" aria-label="Tap to flip card and see details">
+      <div class="flip-card-inner" id="ft-flip-inner">
+        <div class="flip-card-front">
+          <div class="ft-card-kicker">This step</div>
+          <h2 id="ft-front-title">—</h2>
+          <p class="ft-tap-hint">Tap the card or press Space to flip for full instructions.</p>
+          <button type="button" class="ft-flip-btn" id="ft-flip-toggle">Flip for details</button>
+        </div>
+        <div class="flip-card-back">
+          <div class="ft-card-kicker">Details</div>
+          <div class="ft-body" id="ft-back-body"></div>
+          <img class="ft-img" id="ft-back-img" alt="" hidden>
+          <div class="ft-tip" id="ft-back-tip" hidden></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="ft-swipe-hint">Swipe left / right · Arrow keys · Space flips the card</p>
+  </main>
+
+  <nav class="ft-nav" aria-label="Steps">
+    <button type="button" class="ft-btn-back" id="ft-prev">Back</button>
+    <button type="button" class="ft-btn-next" id="ft-next">Next screen</button>
+  </nav>
+  </div>
+
+  <script type="module" src="../../js/flip-tutorial.js"></script>
+</body>
+</html>

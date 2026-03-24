@@ -73,7 +73,48 @@
             "path": "/assets/documents/email-profiles/kevin-galaxy-bs24.txt",
             "status": "live"
           }
-        ]
+        ],
+        "androidFlipTutorial": {
+          "title": "Kevin — Galaxy ‘BS 24’ email setup",
+          "subtitle": "Flip each index card. Works on phone, tablet, or desktop browser.",
+          "steps": [
+            {
+              "title": "You’re on the right path",
+              "body": "Kevin — this walkthrough matches **Android** (your Galaxy **‘BS 24’** or any modern phone) and also works if you’re reading on a **laptop** so you can follow along on the phone.",
+              "tip": "Keep this page open while you work on the device where you’re installing mail."
+            },
+            {
+              "title": "Install Outlook first",
+              "body": "Open **Google Play Store** → search **Microsoft Outlook** (Microsoft Corporation) → **Install**. Outlook is usually the smoothest route for **Microsoft 365** mail.",
+              "tip": "Samsung Email works too — we cover that in a later card."
+            },
+            {
+              "title": "Add your work account",
+              "body": "Open **Outlook** → **Add account** → choose **Office 365** or **Exchange** if you see it → enter your **TPG work email** and continue.",
+              "tip": "If you don’t know the exact address, ask the team — it’s not always the same as your personal Gmail."
+            },
+            {
+              "title": "Sign-in & MFA",
+              "body": "Complete **password** and any **multi-factor** prompt (Authenticator, text code, etc.) that your organization requires.",
+              "tip": "If sign-in loops, check date/time on the phone and try Wi‑Fi instead of cellular."
+            },
+            {
+              "title": "If it asks for a server",
+              "body": "Some tenants need a hostname like **outlook.office365.com**. If you’re stuck, open the **server settings** file from the Document Depot in another tab or ask **technical** for the exact host.",
+              "tip": "Don’t guess passwords — use the reset flow from IT if needed."
+            },
+            {
+              "title": "Samsung Email (Plan B)",
+              "body": "**Settings → Accounts and backup → Accounts → Add account → Exchange.** Use the same email and server details your admin provides.",
+              "tip": "Wording varies slightly by Android version — look for **Exchange** or **Microsoft**."
+            },
+            {
+              "title": "You’re live",
+              "body": "Inbox should start filling within a few minutes. Pull down in Outlook to **refresh**. Welcome to mail that actually behaves on the **BS 24**.",
+              "tip": "Still broken? Screenshot the error and ping **technical** — that’s what we’re here for."
+            }
+          ]
+        }
       },
       {
         "leaderId": "debbie-kaglear",

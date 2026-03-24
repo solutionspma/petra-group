@@ -1,0 +1,17 @@
+{
+  "title": "{{fullName}} — Android / Outlook (custom)",
+  "subtitle": "Your flip-card tutorial. Placeholders: {{fullName}} {{firstName}} {{email}} {{company}}",
+  "steps": [
+    {
+      "title": "Screen 1 — short headline (front of card)",
+      "body": "Longer text on the back after you flip. Use **double asterisks** for bold.\n\nNew paragraph.",
+      "tip": "Optional yellow tip box on the back.",
+      "image": ""
+    },
+    {
+      "title": "Screen 2 — next step",
+      "body": "Tell them exactly what to tap. Mention **{{email}}** if you added it to their leader record in documents.json.",
+      "tip": ""
+    }
+  ]
+}
